@@ -27,7 +27,6 @@
     .screen{flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;padding-bottom:90px;}
     .screen{scrollbar-width:thin;scrollbar-color:#334155 transparent;}
     .screen::-webkit-scrollbar{width:8px;}
-    .screen::-webkit-scrollbar-track{background:transparent;}
     .screen::-webkit-scrollbar-thumb{background:#334155;border-radius:999px;border:2px solid transparent;background-clip:padding-box;}
     .screen::-webkit-scrollbar-thumb:hover{background:#475569;border:2px solid transparent;background-clip:padding-box;}
     .wallet-scroll{scrollbar-width:thin;scrollbar-color:#334155 transparent;}
@@ -55,58 +54,14 @@
     .section-title{font-size:.88rem;font-weight:700;}
     .section-link{font-size:.72rem;color:var(--accent2);cursor:pointer;}
 
-    .balance-card{margin:0 16px 16px;padding:22px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:22px;position:relative;overflow:hidden;}
-    .balance-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.07);border-radius:50%;}
-    .balance-card::after{content:'';position:absolute;bottom:-50px;left:-20px;width:120px;height:120px;background:rgba(255,255,255,.05);border-radius:50%;}
-    .bal-label{font-size:.72rem;color:rgba(255,255,255,.7);margin-bottom:4px;}
-    .bal-value{font-size:2.1rem;font-weight:800;color:#fff;letter-spacing:-.03em;}
-    .bal-row{display:flex;gap:12px;margin-top:16px;}
-    .bal-item{flex:1;background:rgba(255,255,255,.13);border-radius:14px;padding:10px 12px;}
-    .bal-item-label{font-size:.62rem;color:rgba(255,255,255,.65);margin-bottom:3px;}
-    .bal-item-val{font-size:.88rem;font-weight:700;color:#fff;}
-
     .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
     .qa-item{background:var(--card);border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;border:1px solid var(--border);cursor:pointer;transition:all .15s;}
     .qa-item:active{transform:scale(.93);background:var(--card2);}
     .qa-icon{font-size:1.4rem;}
     .qa-label{font-size:.62rem;color:var(--muted);text-align:center;font-weight:600;}
 
-    .chart-card{margin:0 16px 16px;background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--border);}
-    .chart-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
-    .chart-tab{padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--muted);border:1px solid var(--border);transition:all .2s;user-select:none;}
-    .chart-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-    .mini-bars{display:flex;align-items:flex-end;gap:5px;height:90px;padding-top:8px;}
-    .mini-bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
-    .mini-bar-wrap{display:flex;gap:2px;align-items:flex-end;width:100%;justify-content:center;}
-    .mini-bar{width:9px;border-radius:3px 3px 0 0;transition:height .4s ease;}
-    .mini-bar.inc{background:var(--green);}
-    .mini-bar.exp{background:var(--red);}
-    .mini-bar-lbl{font-size:.58rem;color:var(--muted);}
-    .chart-legend{display:flex;gap:12px;margin-top:10px;}
-    .leg{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--muted);}
-    .leg-dot{width:8px;height:8px;border-radius:50%;}
-
-    .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 16px;}
-    .stat-card{background:var(--card);border-radius:16px;padding:14px;border:1px solid var(--border);position:relative;overflow:hidden;}
-    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-    .stat-card.g::before{background:var(--green);}
-    .stat-card.r::before{background:var(--red);}
-    .stat-label{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-    .stat-val{font-size:1.1rem;font-weight:800;}
-    .stat-val.g{color:var(--green);}
-    .stat-val.r{color:var(--red);}
-    .stat-icon{position:absolute;right:10px;top:10px;font-size:1.4rem;opacity:.13;}
-
-    .donut-wrap{display:flex;align-items:center;gap:16px;padding:6px 0;}
-    .donut-legend{display:flex;flex-direction:column;gap:8px;flex:1;}
-    .donut-item{display:flex;align-items:center;gap:7px;font-size:.74rem;}
-    .donut-color{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
-    .donut-name{color:var(--muted);flex:1;}
-    .donut-pct{font-weight:700;}
-
     .tx-list{display:flex;flex-direction:column;gap:8px;}
     .tx-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:14px;transition:all .15s;position:relative;}
-    .tx-item:active{transform:scale(.99);}
     .tx-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
     .tx-info{flex:1;min-width:0;}
     .tx-name{font-size:.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -127,45 +82,6 @@
     .mini-btn:active{transform:scale(.93);}
     .mini-btn.danger{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.12);color:#fecaca;}
 
-    .wallet-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:0 16px 12px;}
-    .ws-card{background:var(--card);border-radius:14px;padding:12px;border:1px solid var(--border);text-align:center;}
-    .ws-icon{font-size:1.2rem;margin-bottom:4px;}
-    .ws-lbl{font-size:.58rem;color:var(--muted);margin-bottom:4px;}
-    .ws-val{font-size:.78rem;font-weight:700;}
-
-    .wallet-actions{display:flex;gap:8px;padding:0 16px 14px;}
-    .wa-btn{
-      flex:1;background:var(--card);border:1px solid var(--border);border-radius:14px;
-      padding:10px 10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
-      color:var(--text);font-weight:800;font-size:.75rem;
-    }
-    .wa-btn:active{transform:scale(.99);opacity:.95;}
-
-    .wallet-cash-card{margin:0 16px 16px;padding:16px;background:linear-gradient(135deg,#065f46,#047857);border-radius:20px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;}
-    .wallet-cash-card::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(255,255,255,.07);border-radius:50%;}
-    .wallet-cash-icon{font-size:2rem;}
-    .wallet-cash-info{flex:1;}
-    .wallet-cash-lbl{font-size:.68rem;color:rgba(255,255,255,.65);}
-    .wallet-cash-val{font-size:1.4rem;font-weight:800;color:#fff;}
-    .wallet-cash-sub{font-size:.62rem;color:rgba(255,255,255,.5);margin-top:2px;}
-
-    .wallet-scroll{display:flex;gap:12px;overflow-x:auto;padding:0 16px 10px;margin-bottom:6px;}
-    .bank-card,.credit-card{min-width:240px;height:140px;border-radius:20px;padding:16px;position:relative;overflow:hidden;flex-shrink:0;cursor:pointer;transition:transform .15s;}
-    .bank-card:active,.credit-card:active{transform:scale(.98);}
-    .bc-bank,.cc-flag{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.08em;}
-    .bc-type{font-size:.62rem;color:rgba(255,255,255,.55);margin-top:2px;}
-    .bc-balance,.cc-name{font-size:1.35rem;font-weight:800;color:#fff;margin-top:10px;}
-    .card-bottom{position:absolute;bottom:12px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:center;}
-    .card-num{font-size:.65rem;color:rgba(255,255,255,.45);letter-spacing:.1em;}
-    .card-icon{font-size:1.4rem;opacity:.35;}
-    .bank-card::before,.credit-card::before{content:'';position:absolute;top:-30px;right:-30px;width:110px;height:110px;background:rgba(255,255,255,.07);border-radius:50%;}
-    .bank-card::after,.credit-card::after{content:'';position:absolute;bottom:-35px;left:-15px;width:90px;height:90px;background:rgba(255,255,255,.05);border-radius:50%;}
-    .cc-limit-row{display:flex;justify-content:space-between;margin-top:8px;}
-    .cc-lbl{font-size:.58rem;color:rgba(255,255,255,.55);}
-    .cc-val{font-size:.75rem;font-weight:700;color:#fff;}
-    .cc-bar-bg{background:rgba(255,255,255,.2);border-radius:3px;height:4px;margin-top:5px;overflow:hidden;}
-    .cc-bar-fill{height:100%;border-radius:3px;background:rgba(255,255,255,.75);}
-
     .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:82px;background:rgba(30,41,59,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px 18px;z-index:30;}
     .nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;border-radius:12px;cursor:pointer;transition:all .2s;flex:1;}
     .nav-btn.active{background:rgba(99,102,241,.18);}
@@ -182,9 +98,6 @@
     .sheet-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:flex-end;backdrop-filter:blur(4px);}
     .sheet-overlay.open{display:flex;}
     .sheet{background:var(--card);border-radius:26px 26px 0 0;padding:20px 20px 30px;width:100%;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);max-height:88%;overflow-y:auto;}
-    .sheet{scrollbar-width:thin;scrollbar-color:#334155 transparent;}
-    .sheet::-webkit-scrollbar{width:8px;}
-    .sheet::-webkit-scrollbar-thumb{background:#334155;border-radius:999px;}
     @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
     .sheet-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px;}
     .sheet h3{font-size:1rem;font-weight:700;margin-bottom:16px;}
@@ -199,17 +112,40 @@
     .type-btn.active-exp{border-color:var(--red);background:rgba(239,68,68,.12);color:var(--red);}
     .save-btn{width:100%;padding:15px;background:linear-gradient(135deg,#6366f1,#7c3aed);color:#fff;border:none;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s;}
     .save-btn:active{opacity:.85;}
-    .muted-note{color:var(--muted);font-size:.72rem;line-height:1.35;margin-top:6px;}
     .danger-btn{
       width:100%;padding:13px;border-radius:14px;border:1px solid rgba(239,68,68,.35);
       background:rgba(239,68,68,.12);color:#fecaca;font-weight:800;cursor:pointer;
     }
-
-    .chk-row{display:flex;align-items:center;gap:10px;margin-top:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:10px 12px;border-radius:12px;}
-    .chk-row input{width:18px;height:18px;}
-    .chk-row span{font-size:.75rem;color:var(--text);font-weight:700;}
+    .muted-note{color:var(--muted);font-size:.72rem;line-height:1.35;margin-top:6px;}
     .toast{position:absolute;top:56px;left:16px;right:16px;background:var(--green);color:#fff;padding:12px 16px;border-radius:14px;font-size:.84rem;font-weight:600;z-index:300;transform:translateY(-20px);opacity:0;transition:all .3s;pointer-events:none;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3);}
     .toast.show{transform:translateY(0);opacity:1;}
+
+    /* Categoria: seletor + botão + inline create */
+    .inline-row{display:flex;gap:10px;align-items:center;}
+    .inline-row select{flex:1;}
+    .cat-add-btn{
+      width:44px;height:44px;border-radius:14px;border:1px solid var(--border);
+      background:var(--card2);color:var(--text);cursor:pointer;font-size:1rem;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .cat-add-btn:active{transform:scale(.98);opacity:.95;}
+    .cat-inline{display:none;margin-top:10px;}
+    .cat-inline.open{display:block;}
+    .cat-inline .form-row{grid-template-columns:1fr 1fr;}
+    .cat-inline .save-btn{margin-top:0;padding:12px;border-radius:12px;font-size:.85rem;}
+    .cat-inline .danger-btn{margin-top:0;padding:12px;border-radius:12px;font-size:.85rem;}
+
+    /* Categorias (tela) */
+    .search-row{display:flex;gap:10px;align-items:center;}
+    .search-row input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;color:var(--text);outline:none;font-size:.85rem;}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(99,102,241,.18);border:1px solid rgba(129,140,248,.25);color:var(--accent2);font-size:.7rem;font-weight:800;}
+    .cat-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:14px;position:relative;}
+    .cat-emoji{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);font-size:1.1rem;flex-shrink:0;}
+    .cat-name{font-weight:800;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cat-sub{color:var(--muted);font-size:.7rem;margin-top:2px;}
+    .cat-actions{display:flex;gap:6px;position:absolute;right:10px;top:10px;}
+    .mini-btn.sm{width:28px;height:28px;border-radius:10px;font-size:.8rem;}
+
     @media(max-width:430px){
       .phone-frame{width:100%;height:100dvh;margin:0;border-radius:0;box-shadow:none;}
       .notch{display:none;}
@@ -235,6 +171,7 @@
   </div>
 
   <div class="screen" id="screen">
+    <!-- HOME (simples aqui) -->
     <div class="page active" id="page-home">
       <div class="app-header">
         <div class="header-left">
@@ -243,16 +180,6 @@
         </div>
         <div style="display:flex;gap:8px;align-items:center">
           <div class="icon-btn" onclick="openSheet('settings-sheet')" title="Configurações">⚙️</div>
-          <div class="icon-btn" onclick="showToast('🔔 Sem novas notificações')">🔔</div>
-        </div>
-      </div>
-
-      <div class="balance-card">
-        <div class="bal-label">Patrimônio Total</div>
-        <div class="bal-value" id="bal-main">R$ 0,00</div>
-        <div class="bal-row">
-          <div class="bal-item"><div class="bal-item-label">📈 Receitas (mês)</div><div class="bal-item-val" id="bal-inc">R$ 0,00</div></div>
-          <div class="bal-item"><div class="bal-item-label">📉 Despesas (mês)</div><div class="bal-item-val" id="bal-exp">R$ 0,00</div></div>
         </div>
       </div>
 
@@ -261,118 +188,51 @@
         <div class="quick-actions">
           <div class="qa-item" onclick="openTxSheet('income')"><div class="qa-icon">💚</div><div class="qa-label">Receita</div></div>
           <div class="qa-item" onclick="openTxSheet('expense')"><div class="qa-icon">❤️</div><div class="qa-label">Despesa</div></div>
-          <div class="qa-item" onclick="openTransferSheet()"><div class="qa-icon">🔁</div><div class="qa-label">Transferir</div></div>
-          <div class="qa-item" onclick="switchPage('wallet')"><div class="qa-icon">👛</div><div class="qa-label">Carteira</div></div>
-        </div>
-      </div>
-
-      <div class="chart-card">
-        <div class="section-header" style="margin-bottom:0"><span class="section-title">Visão Geral</span></div>
-        <div class="chart-tabs" style="margin-top:10px">
-          <div class="chart-tab active" onclick="setChartTab(this,6)">6 meses</div>
-          <div class="chart-tab" onclick="setChartTab(this,3)">3 meses</div>
-        </div>
-        <div class="mini-bars" id="mini-bars"></div>
-        <div class="chart-legend">
-          <div class="leg"><div class="leg-dot" style="background:var(--green)"></div>Receitas</div>
-          <div class="leg"><div class="leg-dot" style="background:var(--red)"></div>Despesas</div>
-        </div>
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-card g"><div class="stat-icon">📈</div><div class="stat-label">Receitas Mês</div><div class="stat-val g" id="stat-inc">R$ 0</div></div>
-        <div class="stat-card r"><div class="stat-icon">📉</div><div class="stat-label">Despesas Mês</div><div class="stat-val r" id="stat-exp">R$ 0</div></div>
-      </div>
-
-      <div class="section">
-        <div class="section-header"><span class="section-title">Por Categoria (despesas do mês)</span></div>
-        <div style="background:var(--card);border-radius:16px;padding:14px;border:1px solid var(--border)">
-          <div class="donut-wrap">
-            <svg width="110" height="110" viewBox="0 0 110 110" id="donut-svg" style="flex-shrink:0"></svg>
-            <div class="donut-legend" id="donut-legend"></div>
-          </div>
+          <div class="qa-item" onclick="switchPage('categories')"><div class="qa-icon">🏷️</div><div class="qa-label">Categorias</div></div>
+          <div class="qa-item" onclick="switchPage('transactions')"><div class="qa-icon">💳</div><div class="qa-label">Transações</div></div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-header">
-          <span class="section-title">Recentes</span>
-          <span class="section-link" onclick="switchPage('transactions')">Ver todas →</span>
-        </div>
+        <div class="section-header"><span class="section-title">Recentes</span></div>
         <div class="tx-list" id="recent-tx"></div>
       </div>
     </div>
 
-    <div class="page" id="page-wallet">
-      <div class="app-header">
-        <div class="header-left"><div class="name">Minha Carteira</div></div>
-        <div class="icon-btn" onclick="openSheet('settings-sheet')" title="Configurações">⚙️</div>
-      </div>
-
-      <div class="wallet-summary" id="wallet-summary"></div>
-
-      <div class="wallet-actions">
-        <button class="wa-btn" onclick="openSheet('bank-sheet')">🏦 Banco</button>
-        <button class="wa-btn" onclick="openSheet('credit-sheet')">💳 Cartão</button>
-        <button class="wa-btn" onclick="openCashSheet()">👛 Editar</button>
-        <button class="wa-btn" onclick="openTransferSheet()">🔁 Transferir</button>
-      </div>
-
-      <div class="wallet-cash-card">
-        <div class="mini-actions">
-          <div class="mini-btn" title="Editar" onclick="openCashSheet();event.stopPropagation()">✎</div>
-          <div class="mini-btn danger" title="Zerar" onclick="confirmClearCash();event.stopPropagation()">0</div>
-        </div>
-        <div class="wallet-cash-icon">👛</div>
-        <div class="wallet-cash-info">
-          <div class="wallet-cash-lbl">Carteira (Dinheiro)</div>
-          <div class="wallet-cash-val" id="cash-display">R$ 0,00</div>
-          <div class="wallet-cash-sub">Ações no canto superior</div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-header">
-          <span class="section-title">🏦 Contas Bancárias</span>
-          <span class="section-link" onclick="openSheet('bank-sheet')">+ Adicionar</span>
-        </div>
-        <div class="wallet-scroll" id="bank-cards"></div>
-      </div>
-
-      <div class="section">
-        <div class="section-header">
-          <span class="section-title">💳 Cartões de Crédito</span>
-          <span class="section-link" onclick="openSheet('credit-sheet')">+ Adicionar</span>
-        </div>
-        <div class="wallet-scroll" id="credit-cards"></div>
-      </div>
-    </div>
-
+    <!-- TRANSACTIONS (lista simples) -->
     <div class="page" id="page-transactions">
       <div class="app-header">
         <div class="header-left"><div class="name">Transações</div></div>
         <div style="display:flex;gap:8px;align-items:center">
-          <div class="icon-btn" onclick="openTransferSheet()" title="Transferência">🔁</div>
           <div class="icon-btn" onclick="openTxSheet('expense')" title="Nova">＋</div>
         </div>
       </div>
       <div class="section">
-        <div class="form-group" style="margin-bottom:10px">
-          <label>Filtrar por conta</label>
-          <select id="tx-filter-account" onchange="applyAccountFilter()"></select>
-        </div>
-        <div class="chart-tabs" style="margin-bottom:14px">
-          <div class="chart-tab active" onclick="filterTx('all',this)">Todas</div>
-          <div class="chart-tab" onclick="filterTx('income',this)">Receitas</div>
-          <div class="chart-tab" onclick="filterTx('expense',this)">Despesas</div>
-        </div>
         <div class="tx-list" id="all-tx"></div>
       </div>
     </div>
 
-    <div class="page" id="page-reports">
-      <div class="app-header"><div class="header-left"><div class="name">Relatórios</div></div></div>
-      <div class="section"><div id="rep-content"></div></div>
+    <!-- CATEGORIES -->
+    <div class="page" id="page-categories">
+      <div class="app-header">
+        <div class="header-left"><div class="name">🏷️ Categorias</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="icon-btn" onclick="openCatManagerSheet()" title="Nova">＋</div>
+          <div class="icon-btn" onclick="switchPage('home')" title="Voltar">←</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="search-row" style="margin-bottom:10px">
+          <input id="cat-q" placeholder="Buscar categoria..." oninput="renderCategoriesList()"/>
+          <div class="icon-btn" onclick="resetCategoriesDefaults()" title="Restaurar">↺</div>
+        </div>
+        <div class="chip" id="cat-count">0 categorias</div>
+      </div>
+
+      <div class="section">
+        <div class="tx-list" id="cat-list"></div>
+      </div>
     </div>
   </div>
 
@@ -380,8 +240,8 @@
     <div class="nav-btn active" id="nav-home" onclick="switchPage('home')"><span class="nav-icon">🏠</span><span class="nav-lbl">Início</span></div>
     <div class="nav-btn" id="nav-transactions" onclick="switchPage('transactions')"><span class="nav-icon">💳</span><span class="nav-lbl">Transações</span></div>
     <div style="width:54px;flex-shrink:0"></div>
-    <div class="nav-btn" id="nav-wallet" onclick="switchPage('wallet')"><span class="nav-icon">👛</span><span class="nav-lbl">Carteira</span></div>
-    <div class="nav-btn" id="nav-reports" onclick="switchPage('reports')"><span class="nav-icon">📈</span><span class="nav-lbl">Relatórios</span></div>
+    <div class="nav-btn" id="nav-categories" onclick="switchPage('categories')"><span class="nav-icon">🏷️</span><span class="nav-lbl">Categorias</span></div>
+    <div class="nav-btn" id="nav-settings" onclick="openSheet('settings-sheet')"><span class="nav-icon">⚙️</span><span class="nav-lbl">Ajustes</span></div>
   </div>
 
   <div class="fab" onclick="openTxSheet('expense')">＋</div>
@@ -393,7 +253,6 @@
       <h3 id="tx-sheet-title">Nova Transação</h3>
 
       <input type="hidden" id="tx-id" value=""/>
-      <input type="hidden" id="tx-origin-kind" value="single"/>
 
       <div class="type-toggle">
         <div class="type-btn active-inc" id="btn-inc" onclick="setType('income')">💚 Receita</div>
@@ -403,183 +262,62 @@
       <div class="form-group"><label>Descrição</label><input type="text" id="tx-desc" placeholder="Ex: Salário, Aluguel..."/></div>
 
       <div class="form-row">
-        <div class="form-group"><label id="tx-value-label">Valor (R$)</label><input type="number" id="tx-value" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
+        <div class="form-group"><label>Valor (R$)</label><input type="number" id="tx-value" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
         <div class="form-group"><label>Data</label><input type="date" id="tx-date"/></div>
       </div>
 
-      <div class="form-group"><label>Categoria</label>
-        <select id="tx-cat">
-          <option>💼 Salário</option><option>🏠 Moradia</option><option>🍔 Alimentação</option>
-          <option>🚗 Transporte</option><option>💊 Saúde</option><option>📚 Educação</option>
-          <option>🎮 Lazer</option><option>👗 Vestuário</option><option>💡 Contas</option><option>📦 Outros</option>
-          <option>🏦 Tarifas</option>
-          <option>🔁 Transferência</option>
-        </select>
-      </div>
-
-      <div class="form-group"><label>Conta / Cartão</label><select id="tx-account" onchange="onTxAccountChange()"></select></div>
-
-      <div class="form-group" id="installment-block">
-        <label>Parcelamento</label>
-        <select id="tx-installment-mode" onchange="toggleInstallmentFields()">
-          <option value="none">À vista</option>
-          <option value="fixed">Parcelado (N parcelas)</option>
-          <option value="entry_plus_fixed">Entrada + N parcelas</option>
-          <option value="recurring">Recorrente</option>
-        </select>
-        <div class="muted-note" id="installment-note"></div>
-      </div>
-
-      <div class="form-row" id="installment-fields" style="display:none">
-        <div class="form-group"><label>Nº ocorrências / parcelas</label><input type="number" id="tx-installments" min="2" max="48" value="2" inputmode="numeric"/></div>
-        <div class="form-group"><label>1ª em</label><input type="date" id="tx-first-date"/></div>
-      </div>
-
-      <div class="form-row" id="entry-fields" style="display:none">
-        <div class="form-group"><label>Entrada (R$)</label><input type="number" id="tx-entry" min="0" step="0.01" inputmode="decimal"/></div>
-        <div class="form-group"><label>Data da entrada</label><input type="date" id="tx-entry-date"/></div>
-      </div>
-
-      <div class="form-group" id="recurring-fields" style="display:none">
-        <label>Frequência</label>
-        <select id="tx-recurring-freq">
-          <option value="monthly">Mensal</option>
-          <option value="weekly">Semanal</option>
-          <option value="biweekly">Quinzenal</option>
-        </select>
-        <div class="muted-note">Dica: use “N ocorrências” para limitar.</div>
-      </div>
-
-      <div class="form-group" id="edit-scope-wrap" style="display:none">
-        <label>Aplicar edição em</label>
-        <select id="tx-edit-scope" onchange="onEditScopeChange()">
-          <option value="this">Somente esta</option>
-          <option value="next">Esta e próximas</option>
-          <option value="all">Toda a série</option>
-        </select>
-        <div class="chk-row" id="recalc-row" style="display:none">
-          <input type="checkbox" id="tx-recalc-series" onchange="onRecalcToggle()"/>
-          <span>Recalcular valores/datas (série)</span>
+      <!-- Categoria com botão para criar -->
+      <div class="form-group">
+        <label>Categoria</label>
+        <div class="inline-row">
+          <select id="tx-cat"></select>
+          <button class="cat-add-btn" type="button" title="Criar categoria" onclick="toggleCatInline(true)">＋</button>
         </div>
-        <div class="muted-note" id="edit-scope-note"></div>
+
+        <div class="cat-inline" id="cat-inline">
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label>Ícone (emoji)</label>
+              <input id="cat-emoji" placeholder="Ex: 🧾" maxlength="2"/>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Nome</label>
+              <input id="cat-name" placeholder="Ex: Impostos, Beleza..."/>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:10px">
+            <button class="save-btn" type="button" onclick="addCustomCategoryFromTx()">Salvar</button>
+            <button class="danger-btn" type="button" onclick="toggleCatInline(false)">Cancelar</button>
+          </div>
+          <div class="muted-note">A categoria fica salva e aparecerá sempre.</div>
+        </div>
       </div>
 
-      <div class="form-group" id="edit-transfer-wrap" style="display:none">
-        <label>Transferência</label>
-        <select id="tx-edit-transfer-scope">
-          <option value="both">Editar ambos os lados (origem + destino)</option>
-          <option value="this">Editar somente este lançamento</option>
-        </select>
-        <div class="muted-note">Recomendado: editar ambos, para não “quebrar” a transferência.</div>
-      </div>
+      <div class="form-group"><label>Conta</label><select id="tx-account"></select></div>
 
       <button class="save-btn" onclick="saveTransaction()">💾 Salvar</button>
       <button class="danger-btn" id="tx-delete-btn" style="margin-top:10px;display:none" onclick="deleteEditingTransaction()">🗑️ Excluir</button>
     </div>
   </div>
 
-  <!-- SHEET: TRANSFERÊNCIA -->
-  <div class="sheet-overlay" id="transfer-sheet">
+  <!-- SHEET: CATEGORIA (CRUD) -->
+  <div class="sheet-overlay" id="cat-sheet">
     <div class="sheet">
       <div class="sheet-handle"></div>
-      <h3>🔁 Transferir entre contas</h3>
-      <div class="form-group"><label>De (origem)</label><select id="tr-from"></select></div>
-      <div class="form-group"><label>Para (destino)</label><select id="tr-to"></select></div>
-      <div class="form-row">
-        <div class="form-group"><label>Valor (R$)</label><input type="number" id="tr-value" min="0" step="0.01" inputmode="decimal"/></div>
-        <div class="form-group"><label>Data</label><input type="date" id="tr-date"/></div>
-      </div>
-      <div class="form-group"><label>Descrição</label><input type="text" id="tr-desc" placeholder="Ex: Transferência para reserva"/></div>
-      <div class="form-group">
-        <label>Tarifa</label>
-        <select id="tr-fee-enabled" onchange="toggleTransferFee()">
-          <option value="no">Sem tarifa</option>
-          <option value="yes">Com tarifa</option>
-        </select>
-      </div>
-      <div class="form-row" id="tr-fee-fields" style="display:none">
-        <div class="form-group"><label>Valor da tarifa (R$)</label><input type="number" id="tr-fee-value" min="0" step="0.01" inputmode="decimal"/></div>
-        <div class="form-group"><label>Categoria</label>
-          <select id="tr-fee-cat">
-            <option>🏦 Tarifas</option>
-            <option>📦 Outros</option>
-          </select>
-        </div>
-      </div>
-      <button class="save-btn" onclick="createTransfer()">🔁 Transferir</button>
-    </div>
-  </div>
+      <h3 id="cat-sheet-title">Nova Categoria</h3>
 
-  <!-- SHEET: DINHEIRO -->
-  <div class="sheet-overlay" id="cash-sheet">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-      <h3>👛 Carteira (Dinheiro)</h3>
-      <div class="form-group"><label>Valor em Caixa (R$)</label><input type="number" id="cash-input" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
-      <button class="save-btn" onclick="saveCash()">💾 Salvar</button>
-    </div>
-  </div>
+      <input type="hidden" id="cat-edit-old" value=""/>
 
-  <!-- SHEET: BANCO -->
-  <div class="sheet-overlay" id="bank-sheet">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-      <h3>🏦 Nova Conta Bancária</h3>
-      <div class="form-group"><label>Nome do Banco</label><input type="text" id="bank-name" placeholder="Ex: Nubank, Itaú..."/></div>
-      <div class="form-group"><label>Tipo de Conta</label>
-        <select id="bank-type"><option>Conta Corrente</option><option>Conta Poupança</option><option>Conta Salário</option><option>Conta Digital</option></select>
-      </div>
       <div class="form-row">
-        <div class="form-group"><label>Saldo Atual (R$)</label><input type="number" id="bank-balance" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
-        <div class="form-group"><label>Últimos 4 dígitos</label><input type="text" id="bank-digits" placeholder="0000" maxlength="4"/></div>
+        <div class="form-group"><label>Ícone (emoji)</label><input id="catm-emoji" placeholder="Ex: 🧾" maxlength="2"/></div>
+        <div class="form-group"><label>Nome</label><input id="catm-name" placeholder="Ex: Impostos"/></div>
       </div>
-      <div class="form-group"><label>Cor do Cartão</label>
-        <select id="bank-color">
-          <option value="linear-gradient(135deg,#7c3aed,#4f46e5)">🟣 Roxo</option>
-          <option value="linear-gradient(135deg,#0f766e,#0891b2)">🩵 Teal</option>
-          <option value="linear-gradient(135deg,#b45309,#d97706)">🟠 Laranja</option>
-          <option value="linear-gradient(135deg,#be123c,#e11d48)">🔴 Vermelho</option>
-          <option value="linear-gradient(135deg,#1d4ed8,#2563eb)">🔵 Azul</option>
-          <option value="linear-gradient(135deg,#166534,#15803d)">🟢 Verde</option>
-          <option value="linear-gradient(135deg,#1e293b,#334155)">⚫ Escuro</option>
-        </select>
-      </div>
-      <button class="save-btn" onclick="addBank()">💾 Salvar Conta</button>
-    </div>
-  </div>
 
-  <!-- SHEET: CARTÃO -->
-  <div class="sheet-overlay" id="credit-sheet">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-      <h3>💳 Novo Cartão de Crédito</h3>
-      <div class="form-group"><label>Nome / Apelido</label><input type="text" id="cc-name" placeholder="Ex: Nubank Gold, Inter Black..."/></div>
-      <div class="form-group"><label>Bandeira</label>
-        <select id="cc-flag"><option>Visa</option><option>Mastercard</option><option>Elo</option><option>American Express</option><option>Hipercard</option></select>
+      <button class="save-btn" onclick="saveCategoryManager()">💾 Salvar categoria</button>
+      <button class="danger-btn" id="catm-del-btn" style="margin-top:10px;display:none" onclick="deleteCategoryManager()">🗑️ Excluir categoria</button>
+      <div class="muted-note" style="margin-top:10px">
+        Observação: excluir uma categoria não altera categorias já gravadas nas transações antigas.
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Limite Total (R$)</label><input type="number" id="cc-limit" placeholder="0,00" min="0" inputmode="decimal"/></div>
-        <div class="form-group"><label>Fatura Atual (R$)</label><input type="number" id="cc-used" placeholder="0,00" min="0" inputmode="decimal"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Fechamento (dia)</label><input type="number" id="cc-close" placeholder="24" min="1" max="31" inputmode="numeric"/></div>
-        <div class="form-group"><label>Vencimento (dia)</label><input type="number" id="cc-due" placeholder="10" min="1" max="31" inputmode="numeric"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Últimos 4 dígitos</label><input type="text" id="cc-digits" placeholder="0000" maxlength="4"/></div>
-        <div class="form-group"><label>Cor do Cartão</label>
-          <select id="cc-color">
-            <option value="linear-gradient(135deg,#7c3aed,#6d28d9)">🟣 Roxo</option>
-            <option value="linear-gradient(135deg,#0f172a,#1e293b)">⚫ Preto</option>
-            <option value="linear-gradient(135deg,#b45309,#92400e)">🟤 Dourado</option>
-            <option value="linear-gradient(135deg,#0369a1,#0284c7)">🔵 Azul</option>
-            <option value="linear-gradient(135deg,#be123c,#9f1239)">🔴 Vermelho</option>
-            <option value="linear-gradient(135deg,#065f46,#047857)">🟢 Verde</option>
-          </select>
-        </div>
-      </div>
-      <div class="muted-note">Regras do cartão: compras até o dia de fechamento vão para a fatura que vence no próximo mês; após o fechamento, vencem no mês seguinte.</div>
-      <button class="save-btn" onclick="addCredit()">💾 Salvar Cartão</button>
     </div>
   </div>
 
@@ -588,18 +326,18 @@
     <div class="sheet">
       <div class="sheet-handle"></div>
       <h3>⚙️ Configurações</h3>
+
+      <div class="form-group">
+        <label>Atalhos</label>
+        <button class="save-btn" style="margin-top:0" onclick="closeSheet('settings-sheet');switchPage('categories')">🏷️ Gerenciar categorias</button>
+        <div class="muted-note">Você pode criar/editar/excluir categorias.</div>
+      </div>
+
       <div class="form-group">
         <label>Limpeza de dados</label>
         <button class="danger-btn" onclick="confirmClearTx()">🗑️ Excluir transações</button>
         <div style="height:10px"></div>
-        <button class="danger-btn" onclick="confirmClearBanks()">🗑️ Excluir bancos</button>
-        <div style="height:10px"></div>
-        <button class="danger-btn" onclick="confirmClearCredits()">🗑️ Excluir cartões</button>
-        <div style="height:10px"></div>
-        <button class="danger-btn" onclick="confirmClearCash()">0️⃣ Zerar carteira</button>
-        <div style="height:10px"></div>
-        <button class="danger-btn" onclick="confirmResetAll()">🧹 Zerar TUDO (reset geral)</button>
-        <div class="muted-note">Ações sem “desfazer”.</div>
+        <button class="danger-btn" onclick="confirmResetAll()">🧹 Reset geral</button>
       </div>
     </div>
   </div>
@@ -613,107 +351,84 @@
   let banks        = JSON.parse(localStorage.getItem('ff_banks') || '[]');
   let credits      = JSON.parse(localStorage.getItem('ff_credits') || '[]');
   let cashAmount   = parseFloat(localStorage.getItem('ff_cash') || '0');
-  let currentType  = 'income';
-  let chartMonths  = 6;
-  let txFilter     = 'all';
-  let accountFilter = 'ALL';
+  let categories   = JSON.parse(localStorage.getItem('ff_cats') || '[]');
 
-  // ===== SEED (mínimo) =====
-  (function seedData(){
-    if (!banks.length) {
-      banks = [
-        {id:1,name:'Nubank',type:'Conta Digital',balance:4250.80,digits:'1234',color:'linear-gradient(135deg,#7c3aed,#4f46e5)'},
-        {id:2,name:'Itaú',type:'Conta Corrente',balance:8900.00,digits:'5678',color:'linear-gradient(135deg,#b45309,#d97706)'},
-      ];
-      localStorage.setItem('ff_banks', JSON.stringify(banks));
-    }
-    if (!credits.length) {
-      credits = [
-        {id:1,name:'Nubank Gold',flag:'Mastercard',limit:12000,used:3450,closeDay:24,dueDay:10,digits:'9012',color:'linear-gradient(135deg,#7c3aed,#6d28d9)'},
-      ];
-      localStorage.setItem('ff_credits', JSON.stringify(credits));
-    } else {
-      credits = credits.map(c => ({...c, closeDay: c.closeDay || c.close || 24, dueDay: c.dueDay || c.due || 10}));
-      localStorage.setItem('ff_credits', JSON.stringify(credits));
-    }
-    if (!cashAmount) { cashAmount = 350; localStorage.setItem('ff_cash', String(cashAmount)); }
-    if (!transactions.length) {
-      const now = new Date(), m = now.getMonth(), y = now.getFullYear();
-      const d = (mo, dy) => new Date(y, mo, dy).toISOString().split('T')[0];
-      transactions = [
-        {id:1,type:'income', value:8500, desc:'Salário',  cat:'💼 Salário', date:d(m,5),  account:'Nubank', meta:{}},
-        {id:2,type:'expense',value:1800, desc:'Aluguel',  cat:'🏠 Moradia', date:d(m,1),  account:'Nubank', meta:{}},
-        {id:3,type:'expense',value:650,  desc:'Mercado',  cat:'🍔 Alimentação', date:d(m,8), account:'Nubank Gold', meta:{}},
-      ];
-      localStorage.setItem('ff_tx', JSON.stringify(transactions));
-    }
-  })();
+  let currentType = 'income';
+
+  const DEFAULT_CATS = [
+    '💼 Salário','🏠 Moradia','🍔 Alimentação','🚗 Transporte','💊 Saúde','📚 Educação',
+    '🎮 Lazer','👗 Vestuário','💡 Contas','🏦 Tarifas','📦 Outros','🔁 Transferência'
+  ];
 
   // ===== UTILS =====
-  const fmt  = v => 'R$ ' + (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
   const fmtS = v => 'R$ ' + (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:0, maximumFractionDigits:0});
   const nextId = arr => arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1;
-  const saveAll = () => {
-    localStorage.setItem('ff_tx', JSON.stringify(transactions));
-    localStorage.setItem('ff_banks', JSON.stringify(banks));
-    localStorage.setItem('ff_credits', JSON.stringify(credits));
-    localStorage.setItem('ff_cash', String(cashAmount||0));
-  };
   function showToast(msg, color='var(--green)') {
     const t = document.getElementById('toast');
     t.textContent = msg; t.style.background = color;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2400);
   }
-  function isTransfer(t){ return (t.cat||'').startsWith('🔁'); }
-  function getMonthTx(offset=0) {
-    const d = new Date(); d.setMonth(d.getMonth()-offset);
-    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0');
-    return transactions.filter(t => (t.date||'').startsWith(`${y}-${m}`));
+  function saveAll(){
+    localStorage.setItem('ff_tx', JSON.stringify(transactions));
+    localStorage.setItem('ff_banks', JSON.stringify(banks));
+    localStorage.setItem('ff_credits', JSON.stringify(credits));
+    localStorage.setItem('ff_cash', String(cashAmount||0));
+    localStorage.setItem('ff_cats', JSON.stringify(categories||[]));
   }
-  function getAllAccounts() {
+  function normalizeCat(s){ return (s||'').replace(/\s+/g,' ').trim(); }
+  function splitCat(cat){
+    const s = normalizeCat(cat);
+    const parts = s.split(' ');
+    const emoji = parts[0] || '📦';
+    const name = parts.slice(1).join(' ') || 'Outros';
+    return {emoji, name};
+  }
+
+  function ensureCategories(){
+    if (!Array.isArray(categories) || !categories.length) categories = DEFAULT_CATS.slice();
+    const set = new Set(categories.map(normalizeCat));
+    DEFAULT_CATS.forEach(c => { if (!set.has(normalizeCat(c))) categories.push(c); });
+    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
+    saveAll();
+  }
+
+  function getAllAccounts(){
     return [
-      {name:'Carteira', type:'cash'},
-      ...banks.map(b => ({name:b.name, type:'bank'})),
-      ...credits.map(c => ({name:c.name, type:'credit'})),
+      'Carteira',
+      ...banks.map(b=>b.name),
+      ...credits.map(c=>c.name)
     ];
   }
-  function getAccountType(name){
-    if (name === 'Carteira') return 'cash';
-    if (banks.some(b=>b.name===name)) return 'bank';
-    if (credits.some(c=>c.name===name)) return 'credit';
-    return 'bank';
-  }
-  function getCreditByName(name){
-    return credits.find(c => c.name === name) || null;
-  }
 
-  // ===== Date helpers =====
-  function clampDay(y, m0, day){
-    const last = new Date(y, m0+1, 0).getDate();
-    return Math.min(Math.max(1, day), last);
-  }
-  function addMonthsISO(iso, k){
-    const d = new Date(iso + 'T12:00:00');
-    d.setMonth(d.getMonth() + k);
-    return d.toISOString().split('T')[0];
-  }
-  function addDaysISO(iso, k){
-    const d = new Date(iso + 'T12:00:00');
-    d.setDate(d.getDate() + k);
-    return d.toISOString().split('T')[0];
-  }
-  function creditDueDateForPurchase(purchaseISO, closeDay, dueDay, plusMonths=0){
-    const d = new Date(purchaseISO + 'T12:00:00');
-    const day = d.getDate();
-    const baseAdd = (day <= closeDay) ? 1 : 2;
-    const due = new Date(d.getFullYear(), d.getMonth() + baseAdd + plusMonths, 1);
-    const realDay = clampDay(due.getFullYear(), due.getMonth(), dueDay);
-    const out = new Date(due.getFullYear(), due.getMonth(), realDay);
-    return out.toISOString().split('T')[0];
-  }
+  // ===== SEED =====
+  (function seed(){
+    if (!banks.length) {
+      banks = [
+        {id:1,name:'Nubank',type:'Conta Digital',balance:4250.80},
+        {id:2,name:'Itaú',type:'Conta Corrente',balance:8900.00},
+      ];
+    }
+    if (!credits.length) {
+      credits = [{id:1,name:'Nubank Gold',limit:12000,used:3450,closeDay:24,dueDay:10}];
+    }
+    if (!cashAmount) cashAmount = 350;
 
-  // ===== Clock / splash =====
+    if (!transactions.length) {
+      const now = new Date();
+      const y = now.getFullYear(), m = now.getMonth();
+      const d = (mo, dy) => new Date(y, mo, dy).toISOString().split('T')[0];
+      transactions = [
+        {id:1,type:'income', value:8500, desc:'Salário',  cat:'💼 Salário', date:d(m,5),  account:'Nubank'},
+        {id:2,type:'expense',value:1800, desc:'Aluguel',  cat:'🏠 Moradia', date:d(m,1),  account:'Nubank'},
+        {id:3,type:'expense',value:650,  desc:'Mercado',  cat:'🍔 Alimentação', date:d(m,8), account:'Nubank Gold'},
+      ];
+    }
+    ensureCategories();
+    saveAll();
+  })();
+
+  // ===== CLOCK / SPLASH =====
   function updateClock() {
     const n = new Date();
     document.getElementById('status-time').textContent = n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');
@@ -721,794 +436,316 @@
     document.getElementById('greeting').textContent = h<12?'Bom dia ☀️':h<18?'Boa tarde 🌤️':'Boa noite 🌙';
   }
   updateClock(); setInterval(updateClock, 1000);
-  setTimeout(() => document.getElementById('splash').classList.add('hide'), 1400);
+  setTimeout(() => document.getElementById('splash').classList.add('hide'), 1200);
 
-  // ===== Pages =====
-  function switchPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+  // ===== PAGES =====
+  function switchPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('active'));
     document.getElementById('page-'+id).classList.add('active');
     const nb = document.getElementById('nav-'+id);
     if (nb) nb.classList.add('active');
     document.getElementById('screen').scrollTop = 0;
     renderAll();
+    if (id==='categories') renderCategoriesList();
   }
 
-  // ===== Sheets =====
-  const sheetIds = ['tx-sheet','cash-sheet','bank-sheet','credit-sheet','settings-sheet','transfer-sheet'];
-  sheetIds.forEach(id => {
-    document.getElementById(id).addEventListener('click', e => {
+  // ===== SHEETS =====
+  ['tx-sheet','settings-sheet','cat-sheet'].forEach(id=>{
+    document.getElementById(id).addEventListener('click', e=>{
       if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
     });
   });
   function openSheet(id){ document.getElementById(id).classList.add('open'); }
   function closeSheet(id){ document.getElementById(id).classList.remove('open'); }
 
-  // ===== TX sheet logic =====
-  function setType(t) {
+  // ===== TX =====
+  function setType(t){
     currentType = t;
     document.getElementById('btn-inc').className = 'type-btn'+(t==='income'?' active-inc':'');
     document.getElementById('btn-exp').className = 'type-btn'+(t==='expense'?' active-exp':'');
   }
-  function populateAccountSelect() {
+
+  function renderCategorySelect(selected){
+    ensureCategories();
+    const sel = document.getElementById('tx-cat');
+    const opts = categories.slice().sort((a,b)=>{
+      if (a.startsWith('🔁')) return 1;
+      if (b.startsWith('🔁')) return -1;
+      return a.localeCompare(b,'pt-BR');
+    });
+    sel.innerHTML = opts.map(c=>`<option value="${c}">${c}</option>`).join('');
+    if (selected && opts.includes(selected)) sel.value = selected;
+  }
+
+  function populateAccountSelect(){
     const sel = document.getElementById('tx-account');
-    const opts = getAllAccounts().map(a => a.name);
-    sel.innerHTML = opts.map(o => `<option>${o}</option>`).join('');
-  }
-  function onTxAccountChange(){
-    const acc = document.getElementById('tx-account').value;
-    const note = document.getElementById('installment-note');
-    if (getAccountType(acc) === 'credit') {
-      const c = getCreditByName(acc);
-      note.textContent = c ? `Cartão: fechamento dia ${c.closeDay} e vencimento dia ${c.dueDay}. Parcelas vão para as faturas conforme o fechamento.` :
-                             'Cartão: parcelas seguem regra de fechamento/vencimento.';
-    } else {
-      note.textContent = 'À vista, parcelado, entrada+parcelas ou recorrente.';
-    }
-  }
-  function toggleInstallmentFields() {
-    const mode = document.getElementById('tx-installment-mode').value;
-    const f = document.getElementById('installment-fields');
-    const e = document.getElementById('entry-fields');
-    const r = document.getElementById('recurring-fields');
-    f.style.display = 'none'; e.style.display = 'none'; r.style.display = 'none';
-    if (mode === 'fixed') f.style.display = 'grid';
-    if (mode === 'recurring') { f.style.display = 'grid'; r.style.display = 'block'; }
-    if (mode === 'entry_plus_fixed') { f.style.display = 'grid'; e.style.display = 'grid'; }
+    const opts = getAllAccounts();
+    sel.innerHTML = opts.map(a=>`<option>${a}</option>`).join('');
   }
 
-  function onEditScopeChange(){
-    const kind = document.getElementById('tx-origin-kind').value;
-    const scope = document.getElementById('tx-edit-scope').value;
-    const recalcRow = document.getElementById('recalc-row');
-    const note = document.getElementById('edit-scope-note');
-    const txValueLabel = document.getElementById('tx-value-label');
-
-    if (kind !== 'series') { recalcRow.style.display = 'none'; return; }
-    if (scope === 'this') {
-      recalcRow.style.display = 'none';
-      document.getElementById('tx-recalc-series').checked = false;
-      txValueLabel.textContent = 'Valor (R$)';
-      note.textContent = 'Somente esta parcela/ocorrência será alterada.';
-      // volta a esconder campos extras
-      document.getElementById('installment-fields').style.display = 'none';
-      document.getElementById('entry-fields').style.display = 'none';
-      document.getElementById('recurring-fields').style.display = 'none';
+  function toggleCatInline(open){
+    const box = document.getElementById('cat-inline');
+    if (open){
+      box.classList.add('open');
+      document.getElementById('cat-emoji').value='';
+      document.getElementById('cat-name').value='';
     } else {
-      recalcRow.style.display = 'flex';
-      note.textContent = 'Você pode aplicar apenas descrição/categoria/conta, ou marcar “Recalcular” para redistribuir valores e refazer as datas.';
+      box.classList.remove('open');
     }
   }
 
-  function onRecalcToggle(){
-    const checked = document.getElementById('tx-recalc-series').checked;
-    const txValueLabel = document.getElementById('tx-value-label');
-    if (checked) {
-      txValueLabel.textContent = 'Novo valor TOTAL da série (R$)';
-      document.getElementById('installment-fields').style.display = 'grid';
-      // entry fields só aparece se a série tiver entrada (a gente mostra ao abrir)
-      // recurring fields: aparece se a série for recorrente (a gente mostra ao abrir)
-      showToast('ℹ️ Recalcular: ajuste N e 1ª data', 'var(--accent)');
-    } else {
-      txValueLabel.textContent = 'Valor (R$)';
-      // não mexe no que está visível, para não atrapalhar o usuário
-    }
+  function addCustomCategoryFromTx(){
+    const emoji = normalizeCat(document.getElementById('cat-emoji').value) || '📦';
+    const name  = normalizeCat(document.getElementById('cat-name').value);
+    if (!name){ showToast('⚠️ Informe o nome', 'var(--red)'); return; }
+    const cat = normalizeCat(`${emoji} ${name}`);
+    ensureCategories();
+    if (!categories.includes(cat)) categories.push(cat);
+    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
+    saveAll();
+    renderCategorySelect(cat);
+    toggleCatInline(false);
+    showToast('✅ Categoria criada!');
   }
 
-  function openTxSheet(type) {
-    populateAccountSelect();
+  function openTxSheet(type){
     setType(type);
-    document.getElementById('tx-sheet-title').textContent = 'Nova Transação';
-    document.getElementById('tx-id').value = '';
-    document.getElementById('tx-origin-kind').value = 'single';
-    document.getElementById('tx-value-label').textContent = 'Valor (R$)';
-
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('tx-desc').value = '';
-    document.getElementById('tx-value').value = '';
-    document.getElementById('tx-date').value = today;
-    document.getElementById('tx-cat').value = type === 'income' ? '💼 Salário' : '📦 Outros';
-    document.getElementById('tx-account').value = 'Carteira';
-    document.getElementById('tx-installment-mode').value = 'none';
-    document.getElementById('tx-installments').value = 2;
-    document.getElementById('tx-first-date').value = today;
-    document.getElementById('tx-entry').value = '';
-    document.getElementById('tx-entry-date').value = today;
-    document.getElementById('tx-recurring-freq').value = 'monthly';
-
-    document.getElementById('tx-delete-btn').style.display = 'none';
-    document.getElementById('edit-scope-wrap').style.display = 'none';
-    document.getElementById('edit-transfer-wrap').style.display = 'none';
-    document.getElementById('recalc-row').style.display = 'none';
-    document.getElementById('tx-recalc-series').checked = false;
-    document.getElementById('edit-scope-note').textContent = '';
-
-    document.getElementById('installment-block').style.display = 'block';
-    toggleInstallmentFields();
-    onTxAccountChange();
-    openSheet('tx-sheet');
-  }
-
-  function getSeriesInfo(seriesId){
-    const all = transactions.filter(t => t.meta?.installment?.seriesId === seriesId);
-    const entry = all.find(t => t.meta?.installment?.kind === 'entry') || null;
-    const fixed = all.filter(t => t.meta?.installment?.kind === 'fixed').sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0));
-    const rec   = all.filter(t => t.meta?.installment?.kind === 'recurring').sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0));
-    const total = all.reduce((a,t)=>a+(t.value||0),0);
-    const fixedTotal = fixed.reduce((a,t)=>a+(t.value||0),0);
-    const firstFixedDate = fixed[0]?.date || null;
-    const freq = rec[0]?.meta?.installment?.freq || 'monthly';
-    const count = fixed.length ? fixed.length : rec.length;
-    const kind = fixed.length ? 'fixed' : (rec.length ? 'recurring' : 'fixed');
-    return {all, entry, fixed, rec, total, fixedTotal, firstFixedDate, freq, count, kind};
-  }
-
-  function openEditTx(id) {
-    const t = transactions.find(x => x.id === id);
-    if (!t) return;
-
+    document.getElementById('tx-sheet-title').textContent='Nova Transação';
+    document.getElementById('tx-id').value='';
+    document.getElementById('tx-desc').value='';
+    document.getElementById('tx-value').value='';
+    document.getElementById('tx-date').value = new Date().toISOString().split('T')[0];
     populateAccountSelect();
-    setType(t.type);
-    document.getElementById('tx-sheet-title').textContent = 'Editar Transação';
-    document.getElementById('tx-id').value = String(t.id);
-    document.getElementById('tx-desc').value = t.desc || '';
-    document.getElementById('tx-cat').value = t.cat || '📦 Outros';
-    document.getElementById('tx-account').value = t.account || 'Carteira';
-    document.getElementById('tx-date').value = t.date || new Date().toISOString().split('T')[0];
-
-    // por padrão (edição simples) usa valor do lançamento
-    document.getElementById('tx-value-label').textContent = 'Valor (R$)';
-    document.getElementById('tx-value').value = String(t.value||0);
-
-    // parcelamento só para NOVO (edição: desativado)
-    document.getElementById('installment-block').style.display = 'none';
-    document.getElementById('installment-fields').style.display = 'none';
-    document.getElementById('entry-fields').style.display = 'none';
-    document.getElementById('recurring-fields').style.display = 'none';
-    document.getElementById('tx-recalc-series').checked = false;
-
-    // identificar tipo de edição
-    const sid = t.meta?.installment?.seriesId || null;
-    const gid = t.meta?.transfer?.groupId || null;
-    document.getElementById('tx-origin-kind').value = sid ? 'series' : (gid ? 'transfer' : 'single');
-
-    // Série: mostra escopo e também prepara campos para recalcular
-    if (sid) {
-      const info = getSeriesInfo(sid);
-      document.getElementById('edit-scope-wrap').style.display = 'block';
-      document.getElementById('tx-edit-scope').value = 'this';
-      document.getElementById('recalc-row').style.display = 'none';
-      document.getElementById('edit-scope-note').textContent = 'Série detectada. Use escopo para editar. Para recalcular, selecione “próximas” ou “toda série” e marque “Recalcular”.';
-
-      // prepara campos (para quando marcar recalc)
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('tx-installments').value = Math.max(2, Math.min(48, info.count || 2));
-      document.getElementById('tx-first-date').value = info.firstFixedDate || t.date || today;
-
-      if (info.entry) {
-        document.getElementById('entry-fields').style.display = 'grid';
-        document.getElementById('tx-entry').value = String(info.entry.value||0);
-        document.getElementById('tx-entry-date').value = info.entry.date || (t.date||today);
-      }
-      if (info.kind === 'recurring') {
-        document.getElementById('recurring-fields').style.display = 'block';
-        document.getElementById('tx-recurring-freq').value = info.freq || 'monthly';
-        document.getElementById('installment-fields').style.display = 'grid';
-      }
-
-      // valor para edição de série: total da série (melhor UX)
-      document.getElementById('tx-value').value = String((info.total||0).toFixed(2));
-    } else {
-      document.getElementById('edit-scope-wrap').style.display = 'none';
-    }
-
-    // Transferência: escopo de ambos os lados
-    if (gid) {
-      document.getElementById('edit-transfer-wrap').style.display = 'block';
-      document.getElementById('tx-edit-transfer-scope').value = 'both';
-    } else {
-      document.getElementById('edit-transfer-wrap').style.display = 'none';
-    }
-
-    document.getElementById('tx-delete-btn').style.display = 'block';
-    onTxAccountChange();
+    document.getElementById('tx-account').value='Carteira';
+    renderCategorySelect(type==='income' ? '💼 Salário' : '📦 Outros');
+    toggleCatInline(false);
+    document.getElementById('tx-delete-btn').style.display='none';
     openSheet('tx-sheet');
   }
 
-  // ===== Create installment series (NOVO) =====
-  function adjustSeriesRounding(seriesId, expectedTotal){
-    const items = transactions
-      .filter(t => t.meta?.installment?.seriesId === seriesId && t.meta?.installment?.kind === 'fixed')
-      .sort((a,b) => (a.meta.installment.idx||0) - (b.meta.installment.idx||0));
-    if (!items.length) return;
-    const sum = items.reduce((a,t)=>a+(t.value||0),0);
-    const diff = Number((expectedTotal - sum).toFixed(2));
-    if (diff === 0) return;
-    const lastId = items[items.length-1].id;
-    const idx = transactions.findIndex(t => t.id === lastId);
-    if (idx>=0){
-      transactions[idx] = {...transactions[idx], value: Number(((transactions[idx].value||0) + diff).toFixed(2))};
-    }
-  }
-
-  function addInstallmentSeries(base) {
-    const mode = document.getElementById('tx-installment-mode').value;
-    const accType = getAccountType(base.account);
-    const isCredit = accType === 'credit';
-    const credit = isCredit ? getCreditByName(base.account) : null;
-    const seriesId = 'SER' + Date.now();
-
-    const makeDateForOcc = (purchaseISO, i) => {
-      if (!isCredit) return addMonthsISO(purchaseISO, i);
-      const closeDay = credit?.closeDay || 24;
-      const dueDay = credit?.dueDay || 10;
-      return creditDueDateForPurchase(purchaseISO, closeDay, dueDay, i);
-    };
-
-    if (mode === 'none') {
-      if (isCredit) base = {...base, date: makeDateForOcc(base.date, 0)};
-      transactions.unshift(base);
-      return;
-    }
-
-    const n = Math.max(2, Math.min(48, parseInt(document.getElementById('tx-installments').value || '2', 10)));
-    const firstDate = document.getElementById('tx-first-date').value || base.date;
-    const freq = document.getElementById('tx-recurring-freq').value || 'monthly';
-    const stepISO = (iso, k) => {
-      if (freq === 'weekly') return addDaysISO(iso, 7*k);
-      if (freq === 'biweekly') return addDaysISO(iso, 14*k);
-      return addMonthsISO(iso, k);
-    };
-
-    if (mode === 'recurring') {
-      for (let i=0;i<n;i++){
-        const d = (isCredit && freq==='monthly') ? makeDateForOcc(firstDate, i) : stepISO(firstDate, i);
-        transactions.unshift({
-          ...base,
-          id: nextId(transactions),
-          date: d,
-          meta: {...(base.meta||{}), installment:{seriesId, idx:i+1, total:n, kind:'recurring', freq}}
-        });
-      }
-      return;
-    }
-
-    if (mode === 'entry_plus_fixed') {
-      const entry = Math.max(0, parseFloat(document.getElementById('tx-entry').value || '0'));
-      const entryDate = document.getElementById('tx-entry-date').value || base.date;
-      const remaining = Math.max(0, (base.value||0) - entry);
-      const per = remaining / n;
-
-      if (entry > 0) {
-        const d0 = isCredit ? makeDateForOcc(entryDate, 0) : entryDate;
-        transactions.unshift({
-          ...base,
-          id: nextId(transactions),
-          value: Number(entry.toFixed(2)),
-          date: d0,
-          desc: (base.desc||'') + ' (entrada)',
-          meta: {...(base.meta||{}), installment:{seriesId, idx:0, total:n, kind:'entry'}}
-        });
-      }
-      for (let i=0;i<n;i++){
-        const d = makeDateForOcc(firstDate, i);
-        transactions.unshift({
-          ...base,
-          id: nextId(transactions),
-          value: Number(per.toFixed(2)),
-          date: d,
-          desc: `${base.desc||''} (${i+1}/${n})`,
-          meta: {...(base.meta||{}), installment:{seriesId, idx:i+1, total:n, kind:'fixed'}}
-        });
-      }
-      adjustSeriesRounding(seriesId, base.value - entry);
-      return;
-    }
-
-    if (mode === 'fixed') {
-      const per = (base.value||0) / n;
-      for (let i=0;i<n;i++){
-        const d = makeDateForOcc(firstDate, i);
-        transactions.unshift({
-          ...base,
-          id: nextId(transactions),
-          value: Number(per.toFixed(2)),
-          date: d,
-          desc: `${base.desc||''} (${i+1}/${n})`,
-          meta: {...(base.meta||{}), installment:{seriesId, idx:i+1, total:n, kind:'fixed'}}
-        });
-      }
-      adjustSeriesRounding(seriesId, base.value);
-      return;
-    }
-
-    transactions.unshift(base);
-  }
-
-  // ===== RECALC SERIES (EDIÇÃO) =====
-  function recalcSeries(seriesId, scope, anchorIdx, params){
-    const info = getSeriesInfo(seriesId);
-    const kind = info.kind; // fixed | recurring
-
-    // regra: "next" não muda quantidade total (para não bagunçar histórico)
-    if (scope === 'next' && params.newCount && params.newCount !== info.count) {
-      showToast('⚠️ “Esta e próximas” não altera o nº total. Use “toda a série”.', 'var(--yellow)');
-    }
-
-    const newCount = (scope === 'all') ? Math.max(2, Math.min(48, params.newCount || info.count || 2)) : (info.count || 2);
-    const newFirst = params.newFirstDate || info.firstFixedDate || (info.fixed[0]?.date) || (info.rec[0]?.date) || (new Date().toISOString().split('T')[0]);
-
-    const isCredit = getAccountType(params.account) === 'credit';
-    const credit = isCredit ? getCreditByName(params.account) : null;
-
-    const makeDateFixed = (purchaseISO, i) => {
-      if (!isCredit) return addMonthsISO(purchaseISO, i);
-      const closeDay = credit?.closeDay || 24;
-      const dueDay = credit?.dueDay || 10;
-      return creditDueDateForPurchase(purchaseISO, closeDay, dueDay, i);
-    };
-
-    const freq = params.freq || info.freq || 'monthly';
-    const stepRec = (iso, k) => {
-      if (freq === 'weekly') return addDaysISO(iso, 7*k);
-      if (freq === 'biweekly') return addDaysISO(iso, 14*k);
-      return addMonthsISO(iso, k);
-    };
-
-    // Monta conjuntos a recalcular
-    if (kind === 'fixed') {
-      const fixed = info.fixed;
-      if (!fixed.length) return;
-
-      const idxCut = scope === 'all' ? 1 : Math.max(1, anchorIdx); // parcelas são 1..N
-      const past = fixed.filter(x => (x.meta.installment.idx||0) < idxCut);
-      const affected = fixed.filter(x => (x.meta.installment.idx||0) >= idxCut);
-
-      const entryVal = Math.max(0, Number((params.entryValue ?? (info.entry?.value||0)).toFixed(2)));
-      const keepEntry = !!info.entry;
-      const totalWanted = Math.max(0, params.newTotal || info.total || 0);
-
-      const pastSum = past.reduce((a,t)=>a+(t.value||0),0);
-      const remainingTotal = Math.max(0, Number((totalWanted - (keepEntry ? entryVal : 0) - pastSum).toFixed(2)));
-      const remainingCount = affected.length;
-      const per = remainingCount ? Number((remainingTotal / remainingCount).toFixed(2)) : 0;
-
-      // atualiza entrada (apenas em "all")
-      if (keepEntry && scope === 'all') {
-        const eIdx = transactions.findIndex(t => t.id === info.entry.id);
-        if (eIdx >= 0) {
-          transactions[eIdx] = {
-            ...transactions[eIdx],
-            value: entryVal,
-            date: params.entryDate || transactions[eIdx].date,
-            desc: (params.desc||transactions[eIdx].desc||'') + ' (entrada)',
-            cat: params.cat,
-            account: params.account,
-            type: params.type,
-            meta: {...(transactions[eIdx].meta||{}), installment:{...transactions[eIdx].meta.installment, total:newCount}}
-          };
-        }
-      }
-
-      // recalcula afetadas: valores e datas
-      // data: primeira afetada usa newFirst; demais incrementa a partir dela
-      const startOffset = idxCut - 1; // idx 1 => offset 0
-      affected.forEach((t, j) => {
-        const globalIdx = (t.meta.installment.idx||0);
-        const offsetFromFirst = (globalIdx - 1) - startOffset;
-        const newDate = makeDateFixed(newFirst, offsetFromFirst);
-        const txIndex = transactions.findIndex(x => x.id === t.id);
-        if (txIndex >= 0) {
-          transactions[txIndex] = {
-            ...transactions[txIndex],
-            value: per,
-            date: newDate,
-            desc: `${params.desc} (${globalIdx}/${newCount})`,
-            cat: params.cat,
-            account: params.account,
-            type: params.type,
-            meta: {...(transactions[txIndex].meta||{}), installment:{...transactions[txIndex].meta.installment, total:newCount}}
-          };
-        }
-      });
-
-      // Ajusta centavos na última parcela afetada para bater o total restante
-      const affSorted = affected.slice().sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0));
-      if (affSorted.length) {
-        const sumAff = affSorted.reduce((a,t)=>{
-          const cur = transactions.find(x=>x.id===t.id);
-          return a + (cur?.value||0);
-        },0);
-        const diff = Number((remainingTotal - sumAff).toFixed(2));
-        if (diff !== 0) {
-          const last = affSorted[affSorted.length-1];
-          const li = transactions.findIndex(x=>x.id===last.id);
-          if (li >= 0) transactions[li] = {...transactions[li], value: Number(((transactions[li].value||0) + diff).toFixed(2))};
-        }
-      }
-
-      // Se scope all e newCount != antigo: remover parcelas excedentes ou criar novas
-      if (scope === 'all') {
-        const currentFixed = transactions.filter(t => t.meta?.installment?.seriesId===seriesId && t.meta?.installment?.kind==='fixed');
-        const currentCount = currentFixed.length;
-        if (newCount < currentCount) {
-          // remove as últimas
-          const toRemove = currentFixed.sort((a,b)=>(b.meta.installment.idx||0)-(a.meta.installment.idx||0)).slice(0, currentCount-newCount);
-          const ids = new Set(toRemove.map(x=>x.id));
-          transactions = transactions.filter(t => !ids.has(t.id));
-        } else if (newCount > currentCount) {
-          // cria parcelas novas ao final
-          const baseSample = currentFixed.sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0))[0];
-          const totalWanted2 = Math.max(0, params.newTotal || info.total || 0);
-          const entryVal2 = keepEntry ? entryVal : 0;
-          const remaining2 = Math.max(0, Number((totalWanted2 - entryVal2).toFixed(2)));
-          const per2 = Number((remaining2 / newCount).toFixed(2));
-          for (let i=currentCount+1;i<=newCount;i++){
-            const dateNew = makeDateFixed(newFirst, i-1);
-            transactions.unshift({
-              ...baseSample,
-              id: nextId(transactions),
-              value: per2,
-              date: dateNew,
-              desc: `${params.desc} (${i}/${newCount})`,
-              cat: params.cat,
-              account: params.account,
-              type: params.type,
-              meta: {...(baseSample.meta||{}), installment:{...baseSample.meta.installment, idx:i, total:newCount}}
-            });
-          }
-          // ajustar centavos na última
-          const allFixedNow = transactions.filter(t => t.meta?.installment?.seriesId===seriesId && t.meta?.installment?.kind==='fixed')
-            .sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0));
-          const sum = allFixedNow.reduce((a,t)=>a+(t.value||0),0);
-          const diff = Number((remaining2 - sum).toFixed(2));
-          if (diff !== 0 && allFixedNow.length) {
-            const last = allFixedNow[allFixedNow.length-1];
-            const li = transactions.findIndex(x=>x.id===last.id);
-            if (li>=0) transactions[li] = {...transactions[li], value: Number(((transactions[li].value||0)+diff).toFixed(2))};
-          }
-        }
-
-        // reindexar idx 1..N após remover/criar
-        const fixedNow = transactions.filter(t => t.meta?.installment?.seriesId===seriesId && t.meta?.installment?.kind==='fixed')
-          .sort((a,b)=>(new Date(a.date)-new Date(b.date)));
-        fixedNow.forEach((t,i)=>{
-          const idx = transactions.findIndex(x=>x.id===t.id);
-          const newIdx = i+1;
-          if (idx>=0) {
-            transactions[idx] = {
-              ...transactions[idx],
-              desc: `${params.desc} (${newIdx}/${newCount})`,
-              meta: {...transactions[idx].meta, installment:{...transactions[idx].meta.installment, idx:newIdx, total:newCount}}
-            };
-          }
-        });
-      }
-      return;
-    }
-
-    // Recorrente: recalcula datas e valores (mantendo N)
-    if (kind === 'recurring') {
-      const rec = info.rec;
-      if (!rec.length) return;
-      const idxCut = scope === 'all' ? 1 : Math.max(1, anchorIdx);
-      const affected = rec.filter(x => (x.meta.installment.idx||0) >= idxCut)
-        .sort((a,b)=>(a.meta.installment.idx||0)-(b.meta.installment.idx||0));
-
-      affected.forEach((t, j) => {
-        const globalIdx = (t.meta.installment.idx||0);
-        const offsetFromStart = (globalIdx - idxCut);
-        const newDate = (isCredit && freq==='monthly') ? creditDueDateForPurchase(newFirst, credit?.closeDay||24, credit?.dueDay||10, offsetFromStart) : stepRec(newFirst, offsetFromStart);
-        const iTx = transactions.findIndex(x => x.id === t.id);
-        if (iTx>=0) {
-          transactions[iTx] = {
-            ...transactions[iTx],
-            value: Number((params.newTotal || t.value || 0).toFixed(2)),
-            date: newDate,
-            desc: params.desc,
-            cat: params.cat,
-            account: params.account,
-            type: params.type,
-            meta: {...transactions[iTx].meta, installment:{...transactions[iTx].meta.installment, freq}}
-          };
-        }
-      });
-      return;
-    }
-  }
-
-  // ===== Delete editing =====
-  function deleteEditingTransaction() {
-    const id = parseInt(document.getElementById('tx-id').value || '0', 10);
-    if (!id) return;
-    const t = transactions.find(x => x.id === id);
+  function openEditTx(id){
+    const t = transactions.find(x=>x.id===id);
     if (!t) return;
-
-    const kind = document.getElementById('tx-origin-kind').value;
-    if (kind === 'transfer' && t.meta?.transfer?.groupId) {
-      if (!confirm('Excluir a transferência inteira (ambos os lados)?')) return;
-      const gid = t.meta.transfer.groupId;
-      transactions = transactions.filter(x => x.meta?.transfer?.groupId !== gid);
-      saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('🗑️ Transferência excluída');
-      return;
-    }
-    if (kind === 'series' && t.meta?.installment?.seriesId) {
-      const scope = document.getElementById('tx-edit-scope').value;
-      const sid = t.meta.installment.seriesId;
-      const idxCur = t.meta.installment.idx || 0;
-      const curDate = t.date || '';
-      if (scope !== 'this') {
-        if (!confirm('Excluir conforme o escopo selecionado?')) return;
-        transactions = transactions.filter(x => {
-          const ins = x.meta?.installment;
-          if (!ins || ins.seriesId !== sid) return true;
-          if (scope === 'all') return false;
-          if (scope === 'next') {
-            const xIdx = ins.idx || 0;
-            if (xIdx >= idxCur) return false;
-            if ((x.date||'') >= curDate) return false;
-            return true;
-          }
-          return true;
-        });
-        saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('🗑️ Série excluída');
-        return;
-      }
-    }
-
-    if (!confirm('Excluir esta transação?')) return;
-    transactions = transactions.filter(x => x.id !== id);
-    saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('🗑️ Transação excluída');
+    document.getElementById('tx-sheet-title').textContent='Editar Transação';
+    document.getElementById('tx-id').value=String(t.id);
+    document.getElementById('tx-desc').value=t.desc||'';
+    document.getElementById('tx-value').value=String(t.value||0);
+    document.getElementById('tx-date').value=t.date||new Date().toISOString().split('T')[0];
+    populateAccountSelect();
+    document.getElementById('tx-account').value=t.account||'Carteira';
+    renderCategorySelect(t.cat||'📦 Outros');
+    toggleCatInline(false);
+    setType(t.type||'expense');
+    document.getElementById('tx-delete-btn').style.display='block';
+    openSheet('tx-sheet');
   }
 
-  // ===== Save transaction (NEW/EDIT) =====
-  function saveTransaction() {
+  function deleteEditingTransaction(){
+    const id = parseInt(document.getElementById('tx-id').value||'0',10);
+    if (!id) return;
+    if (!confirm('Excluir esta transação?')) return;
+    transactions = transactions.filter(t=>t.id!==id);
+    saveAll();
+    closeSheet('tx-sheet');
+    renderAll();
+    showToast('🗑️ Excluída');
+  }
+
+  function saveTransaction(){
     const idStr = document.getElementById('tx-id').value.trim();
     const editingId = idStr ? parseInt(idStr,10) : null;
 
-    const value   = parseFloat(document.getElementById('tx-value').value);
-    const desc    = document.getElementById('tx-desc').value.trim();
-    const cat     = document.getElementById('tx-cat').value;
-    const date    = document.getElementById('tx-date').value;
+    const value = parseFloat(document.getElementById('tx-value').value);
+    const desc = (document.getElementById('tx-desc').value||'').trim();
+    const date = document.getElementById('tx-date').value;
+    const cat = document.getElementById('tx-cat').value;
     const account = document.getElementById('tx-account').value;
 
-    if (!value || value<=0 || !desc || !date) {
-      showToast('⚠️ Preencha todos os campos!', 'var(--red)'); return;
+    if (!value || value<=0 || !desc || !date){ showToast('⚠️ Preencha os campos','var(--red)'); return; }
+
+    if (editingId){
+      const idx = transactions.findIndex(t=>t.id===editingId);
+      if (idx<0) return;
+      transactions[idx] = {...transactions[idx], type: currentType, value, desc, date, cat, account};
+    } else {
+      transactions.unshift({id: nextId(transactions), type: currentType, value, desc, date, cat, account});
     }
+    saveAll();
+    closeSheet('tx-sheet');
+    renderAll();
+    showToast('✅ Salvo');
+  }
 
-    // EDIT
-    if (editingId) {
-      const idx = transactions.findIndex(t => t.id === editingId);
-      if (idx === -1) { showToast('⚠️ Transação não encontrada','var(--red)'); return; }
-      const old = transactions[idx];
-      const kind = document.getElementById('tx-origin-kind').value;
+  // ===== CATEGORIES MANAGER =====
+  function openCatManagerSheet(catStr){
+    ensureCategories();
+    const title = document.getElementById('cat-sheet-title');
+    const oldEl = document.getElementById('cat-edit-old');
+    const delBtn = document.getElementById('catm-del-btn');
 
-      // Transfer
-      if (kind === 'transfer' && old.meta?.transfer?.groupId) {
-        const scope = document.getElementById('tx-edit-transfer-scope').value;
-        if (scope === 'both') {
-          const gid = old.meta.transfer.groupId;
-          transactions = transactions.map(t => {
-            if (t.meta?.transfer?.groupId !== gid) return t;
-            return {...t, value, desc, date, cat:'🔁 Transferência'};
-          });
-          saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('✅ Transferência atualizada!');
-          return;
-        }
-      }
+    if (catStr){
+      const {emoji, name} = splitCat(catStr);
+      title.textContent = 'Editar Categoria';
+      oldEl.value = catStr;
+      document.getElementById('catm-emoji').value = emoji;
+      document.getElementById('catm-name').value = name;
+      delBtn.style.display = 'block';
+    } else {
+      title.textContent = 'Nova Categoria';
+      oldEl.value = '';
+      document.getElementById('catm-emoji').value = '';
+      document.getElementById('catm-name').value = '';
+      delBtn.style.display = 'none';
+    }
+    openSheet('cat-sheet');
+  }
 
-      // Series
-      if (kind === 'series' && old.meta?.installment?.seriesId) {
-        const scope = document.getElementById('tx-edit-scope').value;
-        const sid = old.meta.installment.seriesId;
-        const anchorIdx = old.meta.installment.idx || 1;
-        const recalc = document.getElementById('tx-recalc-series').checked && (scope === 'next' || scope === 'all');
+  function saveCategoryManager(){
+    const oldCat = document.getElementById('cat-edit-old').value;
+    const emoji = normalizeCat(document.getElementById('catm-emoji').value) || '📦';
+    const name  = normalizeCat(document.getElementById('catm-name').value);
+    if (!name){ showToast('⚠️ Informe o nome', 'var(--red)'); return; }
+    const newCat = normalizeCat(`${emoji} ${name}`);
 
-        if (recalc) {
-          const newCount = parseInt(document.getElementById('tx-installments').value || '2', 10);
-          const newFirstDate = document.getElementById('tx-first-date').value || date;
-          const entryValue = parseFloat(document.getElementById('tx-entry').value || '0');
-          const entryDate = document.getElementById('tx-entry-date').value || date;
-          const freq = document.getElementById('tx-recurring-freq').value || 'monthly';
+    ensureCategories();
 
-          if (!confirm('Recalcular valores e datas da série conforme o escopo?')) return;
-          recalcSeries(sid, scope, anchorIdx, {
-            newTotal: value,
-            newCount,
-            newFirstDate,
-            entryValue,
-            entryDate,
-            freq,
-            desc,
-            cat,
-            account,
-            type: currentType
-          });
-          saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('✅ Série recalculada!');
-          return;
-        }
-
-        // sem recalc: aplica metadados conforme escopo
-        transactions = transactions.map(t => {
-          const ins = t.meta?.installment;
-          if (!ins || ins.seriesId !== sid) return t;
-          if (scope === 'all') return {...t, desc, cat, account, type: currentType};
-          if (scope === 'next') {
-            const i = ins.idx || 0;
-            if (i >= anchorIdx) return {...t, desc, cat, account, type: currentType};
-            if ((t.date||'') >= (old.date||'')) return {...t, desc, cat, account, type: currentType};
-            return t;
-          }
-          // this
-          if (t.id === editingId) return {...t, value, date, desc, cat, account, type: currentType};
-          return t;
-        });
-
-        saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('✅ Série atualizada!');
-        return;
-      }
-
-      // Simple edit
-      transactions[idx] = {...old, type: currentType, value, desc, cat, date, account};
-      saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('✅ Transação atualizada!');
+    // proteger categoria de transferência (opcional)
+    if (oldCat && oldCat.startsWith('🔁') && newCat !== oldCat){
+      showToast('⚠️ Categoria de transferência não pode ser alterada', 'var(--yellow)');
       return;
     }
 
-    // NEW
-    const base = {id: nextId(transactions), type: currentType, value, desc, cat, date, account, meta:{}};
-    addInstallmentSeries(base);
-    saveAll(); closeSheet('tx-sheet'); renderAll(); showToast('✅ Transação salva!');
-  }
-
-  // ===== Transfer =====
-  function toggleTransferFee(){
-    const on = document.getElementById('tr-fee-enabled').value === 'yes';
-    document.getElementById('tr-fee-fields').style.display = on ? 'grid' : 'none';
-  }
-  function openTransferSheet() {
-    const list = getAllAccounts().map(a => a.name);
-    document.getElementById('tr-from').innerHTML = list.map(x=>`<option>${x}</option>`).join('');
-    document.getElementById('tr-to').innerHTML   = list.map(x=>`<option>${x}</option>`).join('');
-    document.getElementById('tr-date').value = new Date().toISOString().split('T')[0];
-    document.getElementById('tr-value').value = '';
-    document.getElementById('tr-desc').value = 'Transferência';
-    document.getElementById('tr-fee-enabled').value = 'no';
-    document.getElementById('tr-fee-value').value = '';
-    document.getElementById('tr-fee-cat').value = '🏦 Tarifas';
-    toggleTransferFee();
-    openSheet('transfer-sheet');
-  }
-  function createTransfer() {
-    const from = document.getElementById('tr-from').value;
-    const to   = document.getElementById('tr-to').value;
-    const value = parseFloat(document.getElementById('tr-value').value);
-    const date = document.getElementById('tr-date').value;
-    const desc = (document.getElementById('tr-desc').value || 'Transferência').trim();
-    if (!from || !to || from===to) { showToast('⚠️ Selecione contas diferentes','var(--red)'); return; }
-    if (!value || value<=0 || !date) { showToast('⚠️ Informe valor e data','var(--red)'); return; }
-    const groupId = 'TR' + Date.now();
-    transactions.unshift({id: nextId(transactions), type:'expense', value, desc, cat:'🔁 Transferência', date, account:from, meta:{transfer:{groupId, dir:'out', from, to}}});
-    transactions.unshift({id: nextId(transactions), type:'income',  value, desc, cat:'🔁 Transferência', date, account:to,   meta:{transfer:{groupId, dir:'in',  from, to}}});
-    if (document.getElementById('tr-fee-enabled').value === 'yes') {
-      const feeVal = parseFloat(document.getElementById('tr-fee-value').value || '0');
-      const feeCat = document.getElementById('tr-fee-cat').value || '🏦 Tarifas';
-      if (feeVal > 0) transactions.unshift({id: nextId(transactions), type:'expense', value:feeVal, desc:`Tarifa - ${desc}`, cat:feeCat, date, account:from, meta:{transferFee:{groupId}}});
+    // evita duplicar
+    if (categories.includes(newCat) && newCat !== oldCat){
+      showToast('⚠️ Categoria já existe', 'var(--yellow)'); return;
     }
-    saveAll(); closeSheet('transfer-sheet'); renderAll(); showToast('🔁 Transferência registrada!');
+
+    if (oldCat){
+      categories = categories.map(c => c === oldCat ? newCat : c);
+      // (Opcional) migrar transações antigas: aqui eu migro para manter consistência
+      transactions = transactions.map(t => (t.cat===oldCat) ? {...t, cat:newCat} : t);
+    } else {
+      categories.push(newCat);
+    }
+
+    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
+    saveAll();
+    closeSheet('cat-sheet');
+    renderCategoriesList();
+    renderCategorySelect(newCat);
+    showToast('✅ Categoria salva');
   }
 
-  // ===== Cash/Bank/Credit =====
-  function openCashSheet() { document.getElementById('cash-input').value = String(cashAmount || 0); openSheet('cash-sheet'); }
-  function saveCash() {
-    const v = parseFloat(document.getElementById('cash-input').value);
-    if (isNaN(v) || v < 0) { showToast('⚠️ Valor inválido!', 'var(--red)'); return; }
-    cashAmount = v; saveAll(); closeSheet('cash-sheet'); renderAll(); showToast('👛 Carteira atualizada!');
-  }
-  function addBank() {
-    const name    = document.getElementById('bank-name').value.trim();
-    const type    = document.getElementById('bank-type').value;
-    const balance = parseFloat(document.getElementById('bank-balance').value) || 0;
-    const digits  = (document.getElementById('bank-digits').value.trim() || '****').slice(-4);
-    const color   = document.getElementById('bank-color').value;
-    if (!name) { showToast('⚠️ Informe o nome do banco!', 'var(--red)'); return; }
-    banks.push({id: nextId(banks), name, type, balance, digits, color});
-    saveAll(); closeSheet('bank-sheet');
-    document.getElementById('bank-name').value=''; document.getElementById('bank-balance').value=''; document.getElementById('bank-digits').value='';
-    renderAll(); showToast('🏦 Conta adicionada!');
-  }
-  function addCredit() {
-    const name   = document.getElementById('cc-name').value.trim();
-    const flag   = document.getElementById('cc-flag').value;
-    const limit  = parseFloat(document.getElementById('cc-limit').value) || 0;
-    const used   = parseFloat(document.getElementById('cc-used').value)  || 0;
-    const closeDay = parseInt(document.getElementById('cc-close').value) || 24;
-    const dueDay   = parseInt(document.getElementById('cc-due').value)   || 10;
-    const digits = (document.getElementById('cc-digits').value.trim() || '****').slice(-4);
-    const color  = document.getElementById('cc-color').value;
-    if (!name) { showToast('⚠️ Informe o nome do cartão!', 'var(--red)'); return; }
-    credits.push({id: nextId(credits), name, flag, limit, used, closeDay, dueDay, digits, color});
-    saveAll(); closeSheet('credit-sheet');
-    document.getElementById('cc-name').value=''; document.getElementById('cc-limit').value=''; document.getElementById('cc-used').value='';
-    document.getElementById('cc-close').value=''; document.getElementById('cc-due').value=''; document.getElementById('cc-digits').value='';
-    renderAll(); showToast('💳 Cartão adicionado!');
+  function deleteCategoryManager(){
+    const oldCat = document.getElementById('cat-edit-old').value;
+    if (!oldCat) return;
+
+    if (oldCat.startsWith('🔁')){
+      showToast('⚠️ Categoria de transferência não pode ser excluída', 'var(--yellow)');
+      return;
+    }
+
+    const used = transactions.filter(t => t.cat===oldCat).length;
+    const msg = used
+      ? `Excluir categoria?\n\nEla está em uso em ${used} transação(ões). As transações antigas permanecerão com o texto antigo.`
+      : 'Excluir categoria?';
+    if (!confirm(msg)) return;
+
+    categories = categories.filter(c => c !== oldCat);
+    // garante defaults sempre presentes
+    ensureCategories();
+    saveAll();
+    closeSheet('cat-sheet');
+    renderCategoriesList();
+    renderCategorySelect('📦 Outros');
+    showToast('🗑️ Categoria excluída');
   }
 
-  // ===== Filters =====
-  function filterTx(f, el) {
-    txFilter = f;
-    document.querySelectorAll('#page-transactions .chart-tab').forEach(t => t.classList.remove('active'));
-    if (el) el.classList.add('active');
-    renderAllTx();
-  }
-  function setChartTab(el, n) {
-    chartMonths = n;
-    document.querySelectorAll('#page-home .chart-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    renderMiniChart();
-  }
-  function renderAccountFilterSelect() {
-    const sel = document.getElementById('tx-filter-account');
-    const opts = ['ALL', ...getAllAccounts().map(a=>a.name)];
-    sel.innerHTML = opts.map(o => `<option value="${o}">${o==='ALL'?'Todas as contas':o}</option>`).join('');
-    sel.value = accountFilter;
-  }
-  function applyAccountFilter() {
-    accountFilter = document.getElementById('tx-filter-account').value || 'ALL';
-    renderAllTx();
+  function resetCategoriesDefaults(){
+    if (!confirm('Restaurar categorias padrão? (mantém também as suas, se forem diferentes)')) return;
+    ensureCategories();
+    showToast('↺ Categorias restauradas');
+    renderCategoriesList();
+    renderCategorySelect(document.getElementById('tx-cat')?.value);
   }
 
-  // ===== Reset =====
-  function confirmClearTx(){ if (confirm('Excluir TODAS as transações?')) { transactions=[]; saveAll(); renderAll(); showToast('🗑️ Transações excluídas'); } }
-  function confirmClearBanks(){ if (confirm('Excluir TODOS os bancos?')) { banks=[]; saveAll(); renderAll(); showToast('🗑️ Bancos excluídos'); } }
-  function confirmClearCredits(){ if (confirm('Excluir TODOS os cartões?')) { credits=[]; saveAll(); renderAll(); showToast('🗑️ Cartões excluídos'); } }
-  function confirmClearCash(){ if (confirm('Zerar o valor da carteira?')) { cashAmount=0; saveAll(); renderAll(); showToast('👛 Carteira zerada'); } }
-  function confirmResetAll(){ if (confirm('ATENÇÃO: isto vai zerar/excluir TUDO. Confirmar?')) { transactions=[]; banks=[]; credits=[]; cashAmount=0; saveAll(); renderAll(); closeSheet('settings-sheet'); switchPage('home'); showToast('🧹 Reset geral concluído'); } }
-  function deleteTx(id){ if (!confirm('Excluir esta transação?')) return; transactions = transactions.filter(t=>t.id!==id); saveAll(); renderAll(); showToast('🗑️ Excluída'); }
-  function deleteBank(id){ if (!confirm('Excluir este banco?')) return; banks = banks.filter(b=>b.id!==id); saveAll(); renderAll(); showToast('🗑️ Banco excluído'); }
-  function deleteCredit(id){ if (!confirm('Excluir este cartão?')) return; credits = credits.filter(c=>c.id!==id); saveAll(); renderAll(); showToast('🗑️ Cartão excluído'); }
+  function renderCategoriesList(){
+    ensureCategories();
+    const q = (document.getElementById('cat-q')?.value || '').trim().toLowerCase();
+    let list = categories.slice();
 
-  // ===== Render helpers =====
-  function txHTML(t) {
+    if (q) list = list.filter(c => c.toLowerCase().includes(q));
+
+    list.sort((a,b)=>{
+      if (a.startsWith('🔁')) return 1;
+      if (b.startsWith('🔁')) return -1;
+      return a.localeCompare(b,'pt-BR');
+    });
+
+    document.getElementById('cat-count').textContent = `${list.length} categoria(s)`;
+
+    const wrap = document.getElementById('cat-list');
+    wrap.innerHTML = list.map(c=>{
+      const {emoji, name} = splitCat(c);
+      const used = transactions.filter(t => t.cat===c).length;
+      return `
+        <div class="cat-item">
+          <div class="cat-actions">
+            <div class="mini-btn sm" title="Editar" onclick="openCatManagerSheet('${escapeHtmlAttr(c)}')">✎</div>
+            <div class="mini-btn sm danger" title="Excluir" onclick="openCatManagerSheet('${escapeHtmlAttr(c)}'); setTimeout(()=>deleteCategoryManager(), 0)">🗑️</div>
+          </div>
+          <div class="cat-emoji">${emoji}</div>
+          <div class="tx-info" style="min-width:0">
+            <div class="cat-name">${escapeHtml(name)}</div>
+            <div class="cat-sub">${escapeHtml(c)} • usado em ${used}</div>
+          </div>
+        </div>
+      `;
+    }).join('') || `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Nenhuma categoria encontrada.</div>`;
+  }
+
+  // ===== Reset data =====
+  function confirmClearTx(){
+    if (!confirm('Excluir TODAS as transações?')) return;
+    transactions = [];
+    saveAll();
+    renderAll();
+    showToast('🗑️ Transações excluídas');
+  }
+  function confirmResetAll(){
+    if (!confirm('Reset geral? (transações + contas + categorias personalizadas)')) return;
+    transactions = [];
+    banks = [];
+    credits = [];
+    cashAmount = 0;
+    categories = [];
+    ensureCategories();
+    saveAll();
+    closeSheet('settings-sheet');
+    switchPage('home');
+    showToast('🧹 Reset concluído');
+  }
+
+  // ===== Render tx lists =====
+  function txHTML(t){
     const sign = t.type === 'income' ? '+' : '-';
     const cls  = t.type === 'income' ? 'pos' : 'neg';
     const bg   = t.type === 'income' ? '#16a34a22' : '#dc262622';
     const icon = (t.cat || '📦').split(' ')[0];
     const catName = (t.cat || '').split(' ').slice(1).join(' ') || t.cat || '';
     const dateLbl = t.date ? new Date(t.date + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : '';
-    const accLbl = t.account ? `💼 ${t.account}` : '';
-    const inst = t.meta?.installment?.total ? ` • ${t.meta.installment.idx}/${t.meta.installment.total}` : '';
-    const tr = t.meta?.transfer?.groupId ? ' • 🔁' : '';
     return `
       <div class="tx-item">
         <div class="mini-actions">
           <div class="mini-btn" title="Editar" onclick="openEditTx(${t.id});event.stopPropagation()">✎</div>
-          <div class="mini-btn danger" title="Excluir" onclick="deleteTx(${t.id});event.stopPropagation()">🗑️</div>
+          <div class="mini-btn danger" title="Excluir" onclick="if(confirm('Excluir?')){transactions=transactions.filter(x=>x.id!==${t.id});saveAll();renderAll();}event.stopPropagation()">🗑️</div>
         </div>
         <div class="tx-icon" style="background:${bg}">${icon}</div>
         <div class="tx-info">
-          <div class="tx-name">${t.desc || ''}${inst}${tr}</div>
-          <div class="tx-cat">${catName}</div>
-          <div class="tx-sub">${accLbl}</div>
+          <div class="tx-name">${escapeHtml(t.desc||'')}</div>
+          <div class="tx-cat">${escapeHtml(catName)}</div>
+          <div class="tx-sub">💼 ${escapeHtml(t.account||'')}</div>
         </div>
         <div class="tx-right">
           <div class="tx-val ${cls}">${sign}${fmtS(t.value)}</div>
@@ -1518,166 +755,41 @@
     `;
   }
 
-  // ===== Renders =====
-  function renderBalance() {
-    const cur = getMonthTx(0);
-    const inc = cur.filter(t => t.type==='income' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
-    const exp = cur.filter(t => t.type==='expense' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
-    const banksTotal = banks.reduce((a,b)=>a+(b.balance||0),0);
-    const cashTotal  = cashAmount || 0;
-    const cardsDebt  = credits.reduce((a,c)=>a+(c.used||0),0);
-    const netWorth   = banksTotal + cashTotal - cardsDebt;
-    document.getElementById('bal-main').textContent = fmt(netWorth);
-    document.getElementById('bal-inc').textContent  = fmt(inc);
-    document.getElementById('bal-exp').textContent  = fmt(exp);
-    document.getElementById('stat-inc').textContent = fmtS(inc);
-    document.getElementById('stat-exp').textContent = fmtS(exp);
-  }
-  function renderMiniChart() {
-    const lbls = ['J','F','M','A','M','J','J','A','S','O','N','D'];
-    const data = [];
-    for (let i = chartMonths - 1; i >= 0; i--) {
-      const tx = getMonthTx(i).filter(t => !isTransfer(t));
-      const d = new Date(); d.setMonth(d.getMonth() - i);
-      data.push({
-        label: lbls[d.getMonth()],
-        inc: tx.filter(t => t.type === 'income').reduce((a, t) => a + (t.value||0), 0),
-        exp: tx.filter(t => t.type === 'expense').reduce((a, t) => a + (t.value||0), 0),
-      });
-    }
-    const maxVal = Math.max(...data.map(d => Math.max(d.inc, d.exp)), 1);
-    document.getElementById('mini-bars').innerHTML = data.map(d => {
-      const ih = Math.round((d.inc / maxVal) * 75);
-      const eh = Math.round((d.exp / maxVal) * 75);
-      return `
-        <div class="mini-bar-group">
-          <div class="mini-bar-wrap">
-            <div class="mini-bar inc" style="height:${ih}px"></div>
-            <div class="mini-bar exp" style="height:${eh}px"></div>
-          </div>
-          <div class="mini-bar-lbl">${d.label}</div>
-        </div>
-      `;
-    }).join('');
-  }
-  function renderDonut() {
-    const cats = {};
-    getMonthTx(0).filter(t => t.type === 'expense' && !isTransfer(t)).forEach(t => {
-      const k = t.cat || '📦 Outros';
-      cats[k] = (cats[k] || 0) + (t.value || 0);
-    });
-    const total = Object.values(cats).reduce((a,v)=>a+v,0) || 1;
-    const entries = Object.entries(cats).sort((a,b)=>b[1]-a[1]);
-    const svg = document.getElementById('donut-svg');
-    const legend = document.getElementById('donut-legend');
-    if (!entries.length) {
-      svg.innerHTML = '<circle cx="55" cy="55" r="40" fill="none" stroke="#334155" stroke-width="18"/>';
-      legend.innerHTML = '<div style="color:var(--muted);font-size:.75rem">Sem despesas no mês</div>';
-      return;
-    }
-    const colors = ['#6366f1','#ef4444','#f59e0b','#22c55e','#06b6d4','#ec4899'];
-    let offset = 0, paths = '';
-    const r = 40, cx = 55, cy = 55, sw = 18, circ = 2*Math.PI*r;
-    entries.forEach((e,i)=>{
-      const pct = e[1] / total;
-      const dash = pct * circ, gap = circ - dash;
-      paths += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colors[i%colors.length]}"
-        stroke-width="${sw}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset*circ}"
-        transform="rotate(-90 ${cx} ${cy})"/>`;
-      offset += pct;
-    });
-    svg.innerHTML = paths;
-    legend.innerHTML = entries.slice(0,4).map((e,i)=>`
-      <div class="donut-item">
-        <div class="donut-color" style="background:${colors[i%colors.length]}"></div>
-        <span class="donut-name">${e[0].split(' ').slice(1).join(' ')}</span>
-        <span class="donut-pct">${Math.round((e[1]/total)*100)}%</span>
-      </div>
-    `).join('');
-  }
-  function renderRecentTx() {
-    const el = document.getElementById('recent-tx');
-    const list = transactions.slice(0,5);
-    el.innerHTML = list.length ? list.map(txHTML).join('') :
-      '<div style="color:var(--muted);text-align:center;padding:20px;font-size:.84rem">Nenhuma transação ainda</div>';
-  }
-  function renderAllTx() {
-    const el = document.getElementById('all-tx');
-    let list = [...transactions];
-    if (txFilter === 'income') list = list.filter(t => t.type === 'income');
-    if (txFilter === 'expense') list = list.filter(t => t.type === 'expense');
-    if (accountFilter && accountFilter !== 'ALL') list = list.filter(t => (t.account||'') === accountFilter);
-    el.innerHTML = list.length ? list.map(txHTML).join('') :
-      '<div style="color:var(--muted);text-align:center;padding:20px;font-size:.84rem">Nenhuma transação</div>';
-  }
-  function renderWallet() {
-    const banksTotal = banks.reduce((a,b)=>a+(b.balance||0),0);
-    const cashTotal  = cashAmount || 0;
-    const cardsUsed  = credits.reduce((a,c)=>a+(c.used||0),0);
-    document.getElementById('wallet-summary').innerHTML = `
-      <div class="ws-card"><div class="ws-icon">🏦</div><div class="ws-lbl">Bancos</div><div class="ws-val">${fmtS(banksTotal)}</div></div>
-      <div class="ws-card"><div class="ws-icon">👛</div><div class="ws-lbl">Carteira</div><div class="ws-val">${fmtS(cashTotal)}</div></div>
-      <div class="ws-card"><div class="ws-icon">💳</div><div class="ws-lbl">Faturas</div><div class="ws-val" style="color:var(--red)">${fmtS(cardsUsed)}</div></div>
-    `;
-    document.getElementById('cash-display').textContent = fmt(cashTotal);
-    const banksEl = document.getElementById('bank-cards');
-    banksEl.innerHTML = banks.length ? banks.map(b => `
-      <div class="bank-card" style="background:${b.color}">
-        <div class="mini-actions"><div class="mini-btn danger" title="Excluir" onclick="deleteBank(${b.id});event.stopPropagation()">🗑️</div></div>
-        <div class="bc-bank">${b.name}</div>
-        <div class="bc-type">${b.type}</div>
-        <div class="bc-balance">${fmt(b.balance||0)}</div>
-        <div class="card-bottom"><div class="card-num">•••• ${String(b.digits||'****').slice(-4)}</div><div class="card-icon">🏦</div></div>
-      </div>
-    `).join('') : `<div style="color:var(--muted);padding:0 16px">Nenhuma conta cadastrada.</div>`;
-    const creditsEl = document.getElementById('credit-cards');
-    creditsEl.innerHTML = credits.length ? credits.map(c => {
-      const pct = (c.limit||0) > 0 ? Math.min(100, Math.round(((c.used||0)/(c.limit||1))*100)) : 0;
-      return `
-        <div class="credit-card" style="background:${c.color}">
-          <div class="mini-actions"><div class="mini-btn danger" title="Excluir" onclick="deleteCredit(${c.id});event.stopPropagation()">🗑️</div></div>
-          <div class="cc-flag">${c.flag}</div>
-          <div class="cc-name">${c.name}</div>
-          <div class="cc-limit-row">
-            <div><div class="cc-lbl">Fech.</div><div class="cc-val">dia ${c.closeDay||24}</div></div>
-            <div style="text-align:right"><div class="cc-lbl">Venc.</div><div class="cc-val">dia ${c.dueDay||10}</div></div>
-          </div>
-          <div class="cc-bar-bg"><div class="cc-bar-fill" style="width:${pct}%"></div></div>
-          <div class="card-bottom"><div class="card-num">•••• ${String(c.digits||'****').slice(-4)}</div><div class="card-icon">💳</div></div>
-        </div>
-      `;
-    }).join('') : `<div style="color:var(--muted);padding:0 16px">Nenhum cartão cadastrado.</div>`;
-  }
-  function renderReports() {
-    const inc = transactions.filter(t => t.type==='income' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
-    const exp = transactions.filter(t => t.type==='expense' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
-    const months = new Set(transactions.map(t => (t.date||'').slice(0,7))).size || 1;
-    document.getElementById('rep-content').innerHTML = `
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px">
-        <div class="section-title" style="margin-bottom:10px">📊 Resumo Geral</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;color:var(--muted)"><span>Receitas</span><b style="color:var(--green)">${fmt(inc)}</b></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;color:var(--muted)"><span>Despesas</span><b style="color:var(--red)">${fmt(exp)}</b></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;color:var(--muted)"><span>Média mensal receita</span><b style="color:var(--accent2)">${fmt(inc/months)}</b></div>
-        <div style="display:flex;justify-content:space-between;color:var(--muted)"><span>Média mensal despesa</span><b style="color:var(--yellow)">${fmt(exp/months)}</b></div>
-        <div class="muted-note">Transferências (🔁) não entram em receitas/despesas.</div>
-      </div>
-    `;
+  function renderAll(){
+    // nav active
+    document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('active'));
+    const activePage = document.querySelector('.page.active')?.id?.replace('page-','');
+    const nav = document.getElementById('nav-'+activePage);
+    if (nav) nav.classList.add('active');
+
+    // tx lists
+    const rec = document.getElementById('recent-tx');
+    const all = document.getElementById('all-tx');
+    const sorted = transactions.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'') || (b.id-a.id));
+
+    if (rec) rec.innerHTML = sorted.slice(0,6).map(txHTML).join('') || `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Sem transações.</div>`;
+    if (all) all.innerHTML = sorted.map(txHTML).join('') || `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Sem transações.</div>`;
   }
 
-  function renderAll() {
-    renderBalance();
-    renderMiniChart();
-    renderDonut();
-    renderRecentTx();
-    renderAccountFilterSelect();
-    renderAllTx();
-    renderWallet();
-    renderReports();
-    populateAccountSelect();
+  // ===== Escaping helpers =====
+  function escapeHtml(s){
+    return String(s||'')
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'","&#039;");
+  }
+  function escapeHtmlAttr(s){
+    // safe for single-quoted attribute context
+    return escapeHtml(s).replaceAll('\\','\\\\');
   }
 
   // First render
+  ensureCategories();
   renderAll();
+  populateAccountSelect();
+  renderCategorySelect('📦 Outros');
 </script>
 </body>
 </html>
