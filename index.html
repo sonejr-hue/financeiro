@@ -79,6 +79,7 @@
     }
     .mini-btn:active{transform:scale(.93);}
     .mini-btn.danger{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.12);color:#fecaca;}
+    .mini-btn.sm{width:28px;height:28px;border-radius:10px;font-size:.8rem;}
 
     .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:82px;background:rgba(30,41,59,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px 18px;z-index:30;}
     .nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;border-radius:12px;cursor:pointer;transition:all .2s;flex:1;}
@@ -151,14 +152,6 @@
     .search-row{display:flex;gap:10px;align-items:center;}
     .search-row input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;color:var(--text);outline:none;font-size:.85rem;}
     .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(99,102,241,.18);border:1px solid rgba(129,140,248,.25);color:var(--accent2);font-size:.7rem;font-weight:800;margin-top:10px;}
-
-    /* Categories list */
-    .cat-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:14px;position:relative;}
-    .cat-emoji{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);font-size:1.1rem;flex-shrink:0;}
-    .cat-name{font-weight:800;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .cat-sub{color:var(--muted);font-size:.7rem;margin-top:2px;}
-    .cat-actions{display:flex;gap:6px;position:absolute;right:10px;top:10px;}
-    .mini-btn.sm{width:28px;height:28px;border-radius:10px;font-size:.8rem;}
   </style>
 </head>
 <body>
@@ -196,7 +189,7 @@
           <div class="qa-item" onclick="openTxSheet('income')"><div class="qa-icon">💚</div><div class="qa-label">Receita</div></div>
           <div class="qa-item" onclick="openTxSheet('expense')"><div class="qa-icon">❤️</div><div class="qa-label">Despesa</div></div>
           <div class="qa-item" onclick="switchPage('month')"><div class="qa-icon">🗓️</div><div class="qa-label">Mês</div></div>
-          <div class="qa-item" onclick="switchPage('categories')"><div class="qa-icon">🏷️</div><div class="qa-label">Categorias</div></div>
+          <div class="qa-item" onclick="switchPage('transactions')"><div class="qa-icon">💳</div><div class="qa-label">Transações</div></div>
         </div>
       </div>
 
@@ -268,28 +261,35 @@
         </div>
       </div>
 
+      <!-- CONSULTA -->
       <div class="search-card">
         <div class="section-title" style="margin-bottom:10px">🔎 Consulta</div>
         <div class="search-row">
-          <input id="q-text" placeholder="Buscar por descrição/categoria/conta/data..." oninput="renderQueryResults()"/>
+          <input id="q-text" placeholder="Digite e clique Enter (ou tecle Enter)..." onkeydown="onQueryKeyDown(event)"/>
+          <div class="icon-btn" onclick="performSearch()" title="Enter">⏎</div>
           <div class="icon-btn" onclick="clearQuery()" title="Limpar">✕</div>
         </div>
         <div class="form-row" style="margin-top:10px">
           <div class="form-group" style="margin-bottom:0">
             <label>Escopo</label>
-            <select id="q-scope" onchange="renderQueryResults()">
+            <select id="q-scope">
               <option value="month">Apenas mês selecionado</option>
               <option value="all">Todos os meses</option>
             </select>
           </div>
           <div class="form-group" style="margin-bottom:0">
             <label>Tipo</label>
-            <select id="q-type" onchange="renderQueryResults()">
+            <select id="q-type">
               <option value="all">Todos</option>
               <option value="income">Receitas</option>
               <option value="expense">Despesas</option>
             </select>
           </div>
+        </div>
+        <div class="form-group" style="margin-top:10px;margin-bottom:0">
+          <label>Conta (consulta)</label>
+          <select id="q-account"></select>
+          <div class="muted-note">Inclui “Carteira”. Se “Todas”, consulta ignora conta.</div>
         </div>
         <div class="tag" id="q-meta" style="display:none">0 resultados</div>
       </div>
@@ -307,27 +307,6 @@
         <div class="tx-list" id="q-results"></div>
       </div>
     </div>
-
-    <!-- CATEGORIES -->
-    <div class="page" id="page-categories">
-      <div class="app-header">
-        <div class="header-left"><div class="name">🏷️ Categorias</div></div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <div class="icon-btn" onclick="openCatManagerSheet()" title="Nova">＋</div>
-          <div class="icon-btn" onclick="switchPage('home')" title="Voltar">←</div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="search-row" style="margin-bottom:10px">
-          <input id="cat-q" placeholder="Buscar categoria..." oninput="renderCategoriesList()"/>
-          <div class="icon-btn" onclick="resetCategoriesDefaults()" title="Restaurar">↺</div>
-        </div>
-        <div class="tag" id="cat-count">0 categorias</div>
-      </div>
-
-      <div class="section"><div class="tx-list" id="cat-list"></div></div>
-    </div>
   </div>
 
   <div class="bottom-nav">
@@ -335,7 +314,7 @@
     <div class="nav-btn" id="nav-transactions" onclick="switchPage('transactions')"><span class="nav-icon">💳</span><span class="nav-lbl">Transações</span></div>
     <div style="width:54px;flex-shrink:0"></div>
     <div class="nav-btn" id="nav-month" onclick="switchPage('month')"><span class="nav-icon">🗓️</span><span class="nav-lbl">Mês</span></div>
-    <div class="nav-btn" id="nav-categories" onclick="switchPage('categories')"><span class="nav-icon">🏷️</span><span class="nav-lbl">Categorias</span></div>
+    <div class="nav-btn" id="nav-settings" onclick="openSheet('settings-sheet')"><span class="nav-icon">⚙️</span><span class="nav-lbl">Ajustes</span></div>
   </div>
 
   <div class="fab" onclick="openTxSheet('expense')">＋</div>
@@ -360,56 +339,11 @@
         <div class="form-group"><label>Data</label><input type="date" id="tx-date"/></div>
       </div>
 
-      <div class="form-group">
-        <label>Categoria</label>
-        <div class="inline-row">
-          <select id="tx-cat"></select>
-          <button class="cat-add-btn" type="button" title="Criar categoria" onclick="toggleCatInline(true)">＋</button>
-        </div>
-        <div class="cat-inline" id="cat-inline">
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom:0">
-              <label>Ícone (emoji)</label>
-              <input id="cat-emoji" placeholder="Ex: 🧾" maxlength="2"/>
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label>Nome</label>
-              <input id="cat-name" placeholder="Ex: Impostos, Beleza..."/>
-            </div>
-          </div>
-          <div class="form-row" style="margin-top:10px">
-            <button class="save-btn" type="button" onclick="addCustomCategoryFromTx()">Salvar</button>
-            <button class="danger-btn" type="button" onclick="toggleCatInline(false)">Cancelar</button>
-          </div>
-          <div class="muted-note">A categoria fica salva e aparecerá sempre.</div>
-        </div>
-      </div>
-
+      <div class="form-group"><label>Categoria</label><select id="tx-cat"><option>📦 Outros</option></select></div>
       <div class="form-group"><label>Conta</label><select id="tx-account"></select></div>
 
       <button class="save-btn" onclick="saveTransaction()">💾 Salvar</button>
       <button class="danger-btn" id="tx-delete-btn" style="margin-top:10px;display:none" onclick="deleteEditingTransaction()">🗑️ Excluir</button>
-    </div>
-  </div>
-
-  <!-- SHEET: CATEGORIA (CRUD) -->
-  <div class="sheet-overlay" id="cat-sheet">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-      <h3 id="cat-sheet-title">Nova Categoria</h3>
-
-      <input type="hidden" id="cat-edit-old" value=""/>
-
-      <div class="form-row">
-        <div class="form-group"><label>Ícone (emoji)</label><input id="catm-emoji" placeholder="Ex: 🧾" maxlength="2"/></div>
-        <div class="form-group"><label>Nome</label><input id="catm-name" placeholder="Ex: Impostos"/></div>
-      </div>
-
-      <button class="save-btn" onclick="saveCategoryManager()">💾 Salvar categoria</button>
-      <button class="danger-btn" id="catm-del-btn" style="margin-top:10px;display:none" onclick="deleteCategoryManager()">🗑️ Excluir categoria</button>
-      <div class="muted-note" style="margin-top:10px">
-        Editar categoria atualiza transações antigas.
-      </div>
     </div>
   </div>
 
@@ -418,12 +352,6 @@
     <div class="sheet">
       <div class="sheet-handle"></div>
       <h3>⚙️ Configurações</h3>
-      <div class="form-group">
-        <label>Atalhos</label>
-        <button class="save-btn" style="margin-top:0" onclick="closeSheet('settings-sheet');switchPage('categories')">🏷️ Gerenciar categorias</button>
-        <div style="height:10px"></div>
-        <button class="save-btn" style="margin-top:0" onclick="closeSheet('settings-sheet');switchPage('month')">🗓️ Lançamentos mês a mês</button>
-      </div>
       <div class="form-group">
         <label>Limpeza</label>
         <button class="danger-btn" onclick="confirmClearTx()">🗑️ Excluir transações</button>
@@ -442,7 +370,6 @@
   let banks        = JSON.parse(localStorage.getItem('ff_banks') || '[]');
   let credits      = JSON.parse(localStorage.getItem('ff_credits') || '[]');
   let cashAmount   = parseFloat(localStorage.getItem('ff_cash') || '0');
-  let categories   = JSON.parse(localStorage.getItem('ff_cats') || '[]');
 
   let currentType = 'income';
 
@@ -452,10 +379,8 @@
   let monthAccount = 'ALL';
   let monthBalanceMode = 'consolidated'; // consolidated | per_account
 
-  const DEFAULT_CATS = [
-    '💼 Salário','🏠 Moradia','🍔 Alimentação','🚗 Transporte','💊 Saúde','📚 Educação',
-    '🎮 Lazer','👗 Vestuário','💡 Contas','🏦 Tarifas','📦 Outros','🔁 Transferência'
-  ];
+  // Consulta state
+  let qAccount = 'ALL';
 
   // ===== UTILS =====
   const fmt  = v => 'R$ ' + (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -468,70 +393,35 @@
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2400);
   }
-
   function saveAll(){
     localStorage.setItem('ff_tx', JSON.stringify(transactions));
     localStorage.setItem('ff_banks', JSON.stringify(banks));
     localStorage.setItem('ff_credits', JSON.stringify(credits));
     localStorage.setItem('ff_cash', String(cashAmount||0));
-    localStorage.setItem('ff_cats', JSON.stringify(categories||[]));
   }
-
-  function normalizeCat(s){ return (s||'').replace(/\s+/g,' ').trim(); }
-  function splitCat(cat){
-    const s = normalizeCat(cat);
-    const parts = s.split(' ');
-    const emoji = parts[0] || '📦';
-    const name = parts.slice(1).join(' ') || 'Outros';
-    return {emoji, name};
-  }
-
-  function ensureCategories(){
-    if (!Array.isArray(categories) || !categories.length) categories = DEFAULT_CATS.slice();
-    const set = new Set(categories.map(normalizeCat));
-    DEFAULT_CATS.forEach(c => { if (!set.has(normalizeCat(c))) categories.push(c); });
-    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
-    saveAll();
-  }
-
   function isTransfer(t){ return (t.cat||'').startsWith('🔁'); }
-
   function getAllAccounts(){
-    return [
-      'Carteira',
-      ...banks.map(b=>b.name),
-      ...credits.map(c=>c.name)
-    ];
+    return ['Carteira', ...banks.map(b=>b.name), ...credits.map(c=>c.name)];
   }
-
   function getMonthKeyFromISO(iso){ return (iso||'').slice(0,7); }
-
-  function monthTxList(ym){
-    return transactions.filter(t => getMonthKeyFromISO(t.date) === ym);
-  }
-
   function filterByAccount(list, accountNameOrALL){
     if (!accountNameOrALL || accountNameOrALL === 'ALL') return list;
     return list.filter(t => (t.account||'') === accountNameOrALL);
   }
-
   function sumByMonth(ym, accountNameOrALL){
-    const list = filterByAccount(monthTxList(ym), accountNameOrALL);
+    const list = filterByAccount(transactions.filter(t => getMonthKeyFromISO(t.date) === ym), accountNameOrALL);
     const inc = list.filter(t => t.type==='income' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
     const exp = list.filter(t => t.type==='expense' && !isTransfer(t)).reduce((a,t)=>a+(t.value||0),0);
     const net = list.filter(t => !isTransfer(t)).reduce((a,t)=>a + (t.type==='income' ? (t.value||0) : -(t.value||0)), 0);
     return {inc, exp, net, filtered:list};
   }
-
-  // Saldo anterior = soma líquida acumulada até o mês anterior (sem transferências)
   function carryBalanceUntil(ymExclusive, accountNameOrALL){
-    const list = transactions
-      .filter(t => (t.date||'') && getMonthKeyFromISO(t.date) < ymExclusive)
-      .filter(t => !isTransfer(t));
-    const filtered = filterByAccount(list, accountNameOrALL);
-    return filtered.reduce((a,t)=>a + (t.type==='income' ? (t.value||0) : -(t.value||0)), 0);
+    const list = filterByAccount(
+      transactions.filter(t => (t.date||'') && getMonthKeyFromISO(t.date) < ymExclusive).filter(t=>!isTransfer(t)),
+      accountNameOrALL
+    );
+    return list.reduce((a,t)=>a + (t.type==='income' ? (t.value||0) : -(t.value||0)), 0);
   }
-
   function txDeltaForRunningBalance(t){
     if (isTransfer(t)) return 0;
     return t.type === 'income' ? (t.value||0) : -(t.value||0);
@@ -542,7 +432,6 @@
     if (!banks.length) banks = [{id:1,name:'Nubank'},{id:2,name:'Itaú'}];
     if (!credits.length) credits = [{id:1,name:'Nubank Gold'}];
     if (!cashAmount) cashAmount = 350;
-
     if (!transactions.length) {
       const now = new Date();
       const y = now.getFullYear(), m = now.getMonth();
@@ -551,10 +440,8 @@
         {id:1,type:'income', value:8500, desc:'Salário',  cat:'💼 Salário', date:d(m,5),  account:'Nubank'},
         {id:2,type:'expense',value:1800, desc:'Aluguel',  cat:'🏠 Moradia', date:d(m,1),  account:'Nubank'},
         {id:3,type:'expense',value:650,  desc:'Mercado',  cat:'🍔 Alimentação', date:d(m,8), account:'Nubank Gold'},
-        {id:4,type:'expense',value:300,  desc:'Transferência p/ Itaú', cat:'🔁 Transferência', date:d(m,10), account:'Nubank'}
       ];
     }
-    ensureCategories();
     saveAll();
   })();
 
@@ -577,12 +464,11 @@
     if (nb) nb.classList.add('active');
     document.getElementById('screen').scrollTop = 0;
     renderAll();
-    if (id==='categories') renderCategoriesList();
     if (id==='month') initMonthPage();
   }
 
   // ===== SHEETS =====
-  ['tx-sheet','settings-sheet','cat-sheet'].forEach(id=>{
+  ['tx-sheet','settings-sheet'].forEach(id=>{
     document.getElementById(id).addEventListener('click', e=>{
       if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
     });
@@ -596,46 +482,11 @@
     document.getElementById('btn-inc').className = 'type-btn'+(t==='income'?' active-inc':'');
     document.getElementById('btn-exp').className = 'type-btn'+(t==='expense'?' active-exp':'');
   }
-  function renderCategorySelect(selected){
-    ensureCategories();
-    const sel = document.getElementById('tx-cat');
-    const opts = categories.slice().sort((a,b)=>{
-      if (a.startsWith('🔁')) return 1;
-      if (b.startsWith('🔁')) return -1;
-      return a.localeCompare(b,'pt-BR');
-    });
-    sel.innerHTML = opts.map(c=>`<option value="${escapeHtmlAttr(c)}">${escapeHtml(c)}</option>`).join('');
-    if (selected && opts.includes(selected)) sel.value = selected;
-  }
   function populateAccountSelect(){
     const sel = document.getElementById('tx-account');
     const opts = getAllAccounts();
     sel.innerHTML = opts.map(a=>`<option>${escapeHtml(a)}</option>`).join('');
   }
-  function toggleCatInline(open){
-    const box = document.getElementById('cat-inline');
-    if (open){
-      box.classList.add('open');
-      document.getElementById('cat-emoji').value='';
-      document.getElementById('cat-name').value='';
-    } else {
-      box.classList.remove('open');
-    }
-  }
-  function addCustomCategoryFromTx(){
-    const emoji = normalizeCat(document.getElementById('cat-emoji').value) || '📦';
-    const name  = normalizeCat(document.getElementById('cat-name').value);
-    if (!name){ showToast('⚠️ Informe o nome', 'var(--red)'); return; }
-    const cat = normalizeCat(`${emoji} ${name}`);
-    ensureCategories();
-    if (!categories.includes(cat)) categories.push(cat);
-    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
-    saveAll();
-    renderCategorySelect(cat);
-    toggleCatInline(false);
-    showToast('✅ Categoria criada!');
-  }
-
   function openTxSheet(type){
     setType(type);
     document.getElementById('tx-sheet-title').textContent='Nova Transação';
@@ -645,8 +496,6 @@
     document.getElementById('tx-date').value = new Date().toISOString().split('T')[0];
     populateAccountSelect();
     document.getElementById('tx-account').value='Carteira';
-    renderCategorySelect(type==='income' ? '💼 Salário' : '📦 Outros');
-    toggleCatInline(false);
     document.getElementById('tx-delete-btn').style.display='none';
     openSheet('tx-sheet');
   }
@@ -660,8 +509,6 @@
     document.getElementById('tx-date').value=t.date||new Date().toISOString().split('T')[0];
     populateAccountSelect();
     document.getElementById('tx-account').value=t.account||'Carteira';
-    renderCategorySelect(t.cat||'📦 Outros');
-    toggleCatInline(false);
     setType(t.type||'expense');
     document.getElementById('tx-delete-btn').style.display='block';
     openSheet('tx-sheet');
@@ -675,7 +522,6 @@
     closeSheet('tx-sheet');
     renderAll();
     renderMonthPage();
-    renderQueryResults();
     showToast('🗑️ Excluída');
   }
   function saveTransaction(){
@@ -685,15 +531,11 @@
     const value = parseFloat(document.getElementById('tx-value').value);
     const desc = (document.getElementById('tx-desc').value||'').trim();
     const date = document.getElementById('tx-date').value;
-    const cat = document.getElementById('tx-cat').value;
     const account = document.getElementById('tx-account').value;
 
     if (!value || value<=0 || !desc || !date){ showToast('⚠️ Preencha os campos','var(--red)'); return; }
-    if (document.getElementById('cat-inline')?.classList.contains('open')) {
-      if (!confirm('Você abriu a criação de categoria. Deseja continuar sem salvar?')) return;
-      toggleCatInline(false);
-    }
 
+    const cat = '📦 Outros';
     if (editingId){
       const idx = transactions.findIndex(t=>t.id===editingId);
       if (idx<0) return;
@@ -705,18 +547,15 @@
     closeSheet('tx-sheet');
     renderAll();
     renderMonthPage();
-    renderQueryResults();
     showToast('✅ Salvo');
   }
 
-  // ===== Month page (consolidado OU por conta) =====
+  // ===== Month page =====
   function initMonthPage(){
     const mp = document.getElementById('month-picker');
     if (mp) mp.value = monthSelected;
-
     const carry = document.getElementById('month-carry');
     if (carry) carry.checked = monthCarry;
-
     const mode = document.getElementById('month-balance-mode');
     if (mode) mode.value = monthBalanceMode;
 
@@ -726,22 +565,28 @@
       sel.innerHTML = opts.map(o => `<option value="${escapeHtmlAttr(o)}">${o==='ALL'?'Todas as contas':escapeHtml(o)}</option>`).join('');
       sel.value = monthAccount;
     }
+
+    // popular conta da consulta (inclui Carteira)
+    const qSel = document.getElementById('q-account');
+    if (qSel){
+      const opts = ['ALL', ...getAllAccounts()];
+      qSel.innerHTML = opts.map(o => `<option value="${escapeHtmlAttr(o)}">${o==='ALL'?'Todas as contas':escapeHtml(o)}</option>`).join('');
+      qSel.value = qAccount;
+    }
+
     renderMonthPage();
-    renderQueryResults();
+    // não roda automaticamente; usuário clica Enter
+    clearQuery(true);
   }
 
   function renderMonthPage(){
     const mp = document.getElementById('month-picker');
     if (!mp) return;
     monthSelected = mp.value || monthSelected;
-
     monthCarry = !!document.getElementById('month-carry')?.checked;
     monthBalanceMode = document.getElementById('month-balance-mode')?.value || 'consolidated';
     monthAccount = document.getElementById('month-account')?.value || 'ALL';
 
-    // regra de modo:
-    // - consolidated: ignora filtro de conta e desabilita seletor
-    // - per_account: usa filtro de conta (se ALL, avisa)
     const accWrap = document.getElementById('month-account-wrap');
     const accSel = document.getElementById('month-account');
 
@@ -754,8 +599,6 @@
       if (accSel) accSel.disabled = false;
       if (accWrap) accWrap.style.opacity = '1';
       if (monthAccount === 'ALL') {
-        showToast('ℹ️ Para “Por conta”, selecione uma conta.', 'var(--yellow)');
-        // não trava: apenas mantém ALL, mas sem sentido; forçamos Carteira se existir
         const opts = getAllAccounts();
         monthAccount = opts.includes('Carteira') ? 'Carteira' : (opts[0] || 'ALL');
         if (accSel) accSel.value = monthAccount;
@@ -771,13 +614,9 @@
     document.getElementById('m-inc').textContent = fmt(inc);
     document.getElementById('m-exp').textContent = fmt(exp);
 
-    // extrato com saldo corrido (por linha)
     const el = document.getElementById('month-tx');
-    if (!el) return;
-
     const list = filtered.slice().sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.id-b.id));
     let running = carry;
-
     el.innerHTML = list.length ? list.map(t => {
       const delta = txDeltaForRunningBalance(t);
       running = Number((running + delta).toFixed(2));
@@ -795,7 +634,7 @@
         <div class="tx-item">
           <div class="mini-actions">
             <div class="mini-btn" title="Editar" onclick="openEditTx(${t.id});event.stopPropagation()">✎</div>
-            <div class="mini-btn danger" title="Excluir" onclick="if(confirm('Excluir?')){transactions=transactions.filter(x=>x.id!==${t.id});saveAll();renderAll();renderMonthPage();renderQueryResults();}event.stopPropagation()">🗑️</div>
+            <div class="mini-btn danger" title="Excluir" onclick="if(confirm('Excluir?')){transactions=transactions.filter(x=>x.id!==${t.id});saveAll();renderAll();renderMonthPage();}event.stopPropagation()">🗑️</div>
           </div>
           <div class="tx-icon" style="background:${bg}">${escapeHtml(icon)}</div>
           <div class="tx-info">
@@ -812,26 +651,36 @@
     }).join('') : `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Sem lançamentos no mês.</div>`;
   }
 
-  // ===== Consulta =====
-  function clearQuery(){
-    const t = document.getElementById('q-text');
-    if (t) t.value = '';
+  // ===== Consulta (Enter) =====
+  function onQueryKeyDown(ev){
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      performSearch();
+    }
+  }
+  function performSearch(){
     renderQueryResults();
   }
+  function clearQuery(soft){
+    const t = document.getElementById('q-text');
+    if (t) t.value = '';
+    const meta = document.getElementById('q-meta');
+    const results = document.getElementById('q-results');
+    if (meta) meta.style.display = 'none';
+    if (results && !soft) results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo e clique ⏎.</div>`;
+    if (results && soft) results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo e clique ⏎ (Enter) para pesquisar.</div>`;
+  }
+
   function renderQueryResults(){
     const txtEl = document.getElementById('q-text');
     const q = (txtEl?.value || '').trim().toLowerCase();
     const scope = document.getElementById('q-scope')?.value || 'month';
     const type = document.getElementById('q-type')?.value || 'all';
+    qAccount = document.getElementById('q-account')?.value || 'ALL';
 
     let list = transactions.slice();
     if (scope === 'month') list = list.filter(t => getMonthKeyFromISO(t.date) === monthSelected);
-
-    // respeita o filtro de conta somente se modo por conta
-    if (monthBalanceMode === 'per_account' && monthAccount && monthAccount !== 'ALL') {
-      list = list.filter(t => (t.account||'') === monthAccount);
-    }
-
+    if (qAccount !== 'ALL') list = list.filter(t => (t.account||'') === qAccount);
     if (type !== 'all') list = list.filter(t => t.type === type);
 
     if (q) {
@@ -846,7 +695,7 @@
 
     if (!q){
       meta.style.display = 'none';
-      results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo para consultar.</div>`;
+      results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo e clique ⏎.</div>`;
       return;
     }
     meta.style.display = 'inline-flex';
@@ -857,150 +706,7 @@
       `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Nada encontrado.</div>`;
   }
 
-  // ===== Categories manager =====
-  function openCatManagerSheet(catStr){
-    ensureCategories();
-    const title = document.getElementById('cat-sheet-title');
-    const oldEl = document.getElementById('cat-edit-old');
-    const delBtn = document.getElementById('catm-del-btn');
-
-    if (catStr){
-      const {emoji, name} = splitCat(catStr);
-      title.textContent = 'Editar Categoria';
-      oldEl.value = catStr;
-      document.getElementById('catm-emoji').value = emoji;
-      document.getElementById('catm-name').value = name;
-      delBtn.style.display = 'block';
-    } else {
-      title.textContent = 'Nova Categoria';
-      oldEl.value = '';
-      document.getElementById('catm-emoji').value = '';
-      document.getElementById('catm-name').value = '';
-      delBtn.style.display = 'none';
-    }
-    openSheet('cat-sheet');
-  }
-
-  function saveCategoryManager(){
-    const oldCat = document.getElementById('cat-edit-old').value;
-    const emoji = normalizeCat(document.getElementById('catm-emoji').value) || '📦';
-    const name  = normalizeCat(document.getElementById('catm-name').value);
-    if (!name){ showToast('⚠️ Informe o nome', 'var(--red)'); return; }
-    const newCat = normalizeCat(`${emoji} ${name}`);
-
-    ensureCategories();
-    if (oldCat && oldCat.startsWith('🔁') && newCat !== oldCat){
-      showToast('⚠️ Categoria de transferência não pode ser alterada', 'var(--yellow)');
-      return;
-    }
-    if (categories.includes(newCat) && newCat !== oldCat){
-      showToast('⚠️ Categoria já existe', 'var(--yellow)');
-      return;
-    }
-
-    if (oldCat){
-      categories = categories.map(c => c === oldCat ? newCat : c);
-      transactions = transactions.map(t => (t.cat===oldCat) ? {...t, cat:newCat} : t);
-    } else {
-      categories.push(newCat);
-    }
-
-    categories = Array.from(new Set(categories.map(normalizeCat).filter(Boolean)));
-    saveAll();
-    closeSheet('cat-sheet');
-    renderCategoriesList();
-    renderCategorySelect(newCat);
-    renderAll();
-    renderMonthPage();
-    renderQueryResults();
-    showToast('✅ Categoria salva');
-  }
-
-  function deleteCategoryManager(){
-    const oldCat = document.getElementById('cat-edit-old').value;
-    if (!oldCat) return;
-    if (oldCat.startsWith('🔁')){
-      showToast('⚠️ Categoria de transferência não pode ser excluída', 'var(--yellow)');
-      return;
-    }
-    if (!confirm('Excluir categoria?')) return;
-    categories = categories.filter(c => c !== oldCat);
-    ensureCategories();
-    saveAll();
-    closeSheet('cat-sheet');
-    renderCategoriesList();
-    renderCategorySelect('📦 Outros');
-    renderAll();
-    renderMonthPage();
-    renderQueryResults();
-    showToast('🗑️ Categoria excluída');
-  }
-
-  function resetCategoriesDefaults(){
-    if (!confirm('Restaurar categorias padrão?')) return;
-    ensureCategories();
-    showToast('↺ Categorias restauradas');
-    renderCategoriesList();
-    renderCategorySelect(document.getElementById('tx-cat')?.value);
-  }
-
-  function renderCategoriesList(){
-    ensureCategories();
-    const q = (document.getElementById('cat-q')?.value || '').trim().toLowerCase();
-    let list = categories.slice();
-    if (q) list = list.filter(c => c.toLowerCase().includes(q));
-    list.sort((a,b)=>{
-      if (a.startsWith('🔁')) return 1;
-      if (b.startsWith('🔁')) return -1;
-      return a.localeCompare(b,'pt-BR');
-    });
-
-    document.getElementById('cat-count').textContent = `${list.length} categoria(s)`;
-    const wrap = document.getElementById('cat-list');
-    wrap.innerHTML = list.map(c=>{
-      const {emoji, name} = splitCat(c);
-      const used = transactions.filter(t => t.cat===c).length;
-      return `
-        <div class="cat-item">
-          <div class="cat-actions">
-            <div class="mini-btn sm" title="Editar" onclick="openCatManagerSheet('${escapeHtmlAttr(c)}')">✎</div>
-            <div class="mini-btn sm danger" title="Excluir" onclick="openCatManagerSheet('${escapeHtmlAttr(c)}'); setTimeout(()=>deleteCategoryManager(), 0)">🗑️</div>
-          </div>
-          <div class="cat-emoji">${escapeHtml(emoji)}</div>
-          <div class="tx-info" style="min-width:0">
-            <div class="cat-name">${escapeHtml(name)}</div>
-            <div class="cat-sub">${escapeHtml(c)} • usado em ${used}</div>
-          </div>
-        </div>
-      `;
-    }).join('') || `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Nenhuma categoria encontrada.</div>`;
-  }
-
-  // ===== Reset =====
-  function confirmClearTx(){
-    if (!confirm('Excluir TODAS as transações?')) return;
-    transactions = [];
-    saveAll();
-    renderAll();
-    renderMonthPage();
-    renderQueryResults();
-    showToast('🗑️ Transações excluídas');
-  }
-  function confirmResetAll(){
-    if (!confirm('Reset geral?')) return;
-    transactions = [];
-    banks = [];
-    credits = [];
-    cashAmount = 0;
-    categories = [];
-    ensureCategories();
-    saveAll();
-    closeSheet('settings-sheet');
-    switchPage('home');
-    showToast('🧹 Reset concluído');
-  }
-
-  // ===== Render tx =====
+  // ===== Render tx (listas) =====
   function txHTML(t){
     const sign = t.type === 'income' ? '+' : '-';
     const cls  = t.type === 'income' ? 'pos' : 'neg';
@@ -1012,7 +718,7 @@
       <div class="tx-item">
         <div class="mini-actions">
           <div class="mini-btn" title="Editar" onclick="openEditTx(${t.id});event.stopPropagation()">✎</div>
-          <div class="mini-btn danger" title="Excluir" onclick="if(confirm('Excluir?')){transactions=transactions.filter(x=>x.id!==${t.id});saveAll();renderAll();renderMonthPage();renderQueryResults();}event.stopPropagation()">🗑️</div>
+          <div class="mini-btn danger" title="Excluir" onclick="if(confirm('Excluir?')){transactions=transactions.filter(x=>x.id!==${t.id});saveAll();renderAll();renderMonthPage();}event.stopPropagation()">🗑️</div>
         </div>
         <div class="tx-icon" style="background:${bg}">${escapeHtml(icon)}</div>
         <div class="tx-info">
@@ -1029,11 +735,6 @@
   }
 
   function renderAll(){
-    document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('active'));
-    const activePage = document.querySelector('.page.active')?.id?.replace('page-','');
-    const nav = document.getElementById('nav-'+activePage);
-    if (nav) nav.classList.add('active');
-
     const rec = document.getElementById('recent-tx');
     const all = document.getElementById('all-tx');
     const sorted = transactions.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'') || (b.id-a.id));
@@ -1041,7 +742,28 @@
     if (all) all.innerHTML = sorted.map(txHTML).join('') || `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Sem transações.</div>`;
   }
 
-  // ===== Escaping =====
+  // ===== Reset =====
+  function confirmClearTx(){
+    if (!confirm('Excluir TODAS as transações?')) return;
+    transactions = [];
+    saveAll();
+    renderAll();
+    renderMonthPage();
+    clearQuery();
+    showToast('🗑️ Transações excluídas');
+  }
+  function confirmResetAll(){
+    if (!confirm('Reset geral?')) return;
+    transactions = [];
+    banks = [];
+    credits = [];
+    cashAmount = 0;
+    saveAll();
+    closeSheet('settings-sheet');
+    switchPage('home');
+    showToast('🧹 Reset concluído');
+  }
+
   function escapeHtml(s){
     return String(s||'')
       .replaceAll('&','&amp;')
@@ -1055,10 +777,8 @@
   }
 
   // ===== Init =====
-  ensureCategories();
   renderAll();
   populateAccountSelect();
-  renderCategorySelect('📦 Outros');
   initMonthPage();
 </script>
 </body>
