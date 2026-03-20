@@ -79,7 +79,6 @@
     }
     .mini-btn:active{transform:scale(.93);}
     .mini-btn.danger{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.12);color:#fecaca;}
-    .mini-btn.sm{width:28px;height:28px;border-radius:10px;font-size:.8rem;}
 
     .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:82px;background:rgba(30,41,59,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding:0 4px 18px;z-index:30;}
     .nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 10px;border-radius:12px;cursor:pointer;transition:all .2s;flex:1;}
@@ -118,21 +117,7 @@
     .toast{position:absolute;top:56px;left:16px;right:16px;background:var(--green);color:#fff;padding:12px 16px;border-radius:14px;font-size:.84rem;font-weight:600;z-index:300;transform:translateY(-20px);opacity:0;transition:all .3s;pointer-events:none;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3);}
     .toast.show{transform:translateY(0);opacity:1;}
 
-    .inline-row{display:flex;gap:10px;align-items:center;}
-    .inline-row select{flex:1;}
-    .cat-add-btn{
-      width:44px;height:44px;border-radius:14px;border:1px solid var(--border);
-      background:var(--card2);color:var(--text);cursor:pointer;font-size:1rem;font-weight:900;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .cat-add-btn:active{transform:scale(.98);opacity:.95;}
-    .cat-inline{display:none;margin-top:10px;}
-    .cat-inline.open{display:block;}
-    .cat-inline .form-row{grid-template-columns:1fr 1fr;}
-    .cat-inline .save-btn{margin-top:0;padding:12px;border-radius:12px;font-size:.85rem;}
-    .cat-inline .danger-btn{margin-top:0;padding:12px;border-radius:12px;font-size:.85rem;}
-
-    /* Month page */
+    /* Month page / search (mantidos) */
     .month-card{margin:0 16px 14px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px;}
     .month-row{display:flex;gap:10px;align-items:center;}
     .pill{padding:8px 10px;border-radius:14px;background:var(--card2);border:1px solid var(--border);font-size:.78rem;color:var(--text);flex:1;}
@@ -261,7 +246,6 @@
         </div>
       </div>
 
-      <!-- CONSULTA -->
       <div class="search-card">
         <div class="section-title" style="margin-bottom:10px">🔎 Consulta</div>
         <div class="search-row">
@@ -332,15 +316,36 @@
         <div class="type-btn" id="btn-exp" onclick="setType('expense')">❤️ Despesa</div>
       </div>
 
-      <div class="form-group"><label>Descrição</label><input type="text" id="tx-desc" placeholder="Ex: Salário, Aluguel..."/></div>
+      <div class="form-group"><label>Descrição</label><input type="text" id="tx-desc" placeholder="Ex: Mercado, Celular..."/></div>
 
       <div class="form-row">
-        <div class="form-group"><label>Valor (R$)</label><input type="number" id="tx-value" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
-        <div class="form-group"><label>Data</label><input type="date" id="tx-date"/></div>
+        <div class="form-group"><label>Valor total (R$)</label><input type="number" id="tx-value" placeholder="0,00" min="0" step="0.01" inputmode="decimal"/></div>
+        <div class="form-group"><label>Data da compra</label><input type="date" id="tx-date"/></div>
       </div>
 
       <div class="form-group"><label>Categoria</label><select id="tx-cat"><option>📦 Outros</option></select></div>
       <div class="form-group"><label>Conta</label><select id="tx-account"></select></div>
+
+      <!-- NOVO: PARCELAMENTO -->
+      <div class="form-group">
+        <label>Compra parcelada</label>
+        <select id="tx-installment-mode" onchange="toggleInstallmentFields()">
+          <option value="none">À vista</option>
+          <option value="fixed">Parcelada (N parcelas)</option>
+        </select>
+        <div class="muted-note">Ao salvar, o app cria automaticamente os lançamentos das parcelas.</div>
+      </div>
+
+      <div class="form-row" id="installment-fields" style="display:none">
+        <div class="form-group">
+          <label>Nº parcelas</label>
+          <input type="number" id="tx-installments" min="2" max="48" value="2" inputmode="numeric"/>
+        </div>
+        <div class="form-group">
+          <label>1ª parcela em</label>
+          <input type="date" id="tx-first-date"/>
+        </div>
+      </div>
 
       <button class="save-btn" onclick="saveTransaction()">💾 Salvar</button>
       <button class="danger-btn" id="tx-delete-btn" style="margin-top:10px;display:none" onclick="deleteEditingTransaction()">🗑️ Excluir</button>
@@ -374,10 +379,10 @@
   let currentType = 'income';
 
   // Month state
-  let monthSelected = (new Date()).toISOString().slice(0,7); // YYYY-MM
+  let monthSelected = (new Date()).toISOString().slice(0,7);
   let monthCarry = true;
   let monthAccount = 'ALL';
-  let monthBalanceMode = 'consolidated'; // consolidated | per_account
+  let monthBalanceMode = 'consolidated';
 
   // Consulta state
   let qAccount = 'ALL';
@@ -425,6 +430,22 @@
   function txDeltaForRunningBalance(t){
     if (isTransfer(t)) return 0;
     return t.type === 'income' ? (t.value||0) : -(t.value||0);
+  }
+
+  function addMonthsISO(iso, k){
+    const d = new Date(iso + 'T12:00:00');
+    d.setMonth(d.getMonth()+k);
+    return d.toISOString().split('T')[0];
+  }
+
+  // Ajuste de arredondamento: corrige última parcela para bater exatamente no total
+  function adjustLastInstallment(seriesIds, expectedTotal){
+    const sum = seriesIds.reduce((a,id)=>a + (transactions.find(t=>t.id===id)?.value||0), 0);
+    const diff = Number((expectedTotal - sum).toFixed(2));
+    if (diff === 0) return;
+    const lastId = seriesIds[seriesIds.length-1];
+    const idx = transactions.findIndex(t=>t.id===lastId);
+    if (idx>=0) transactions[idx] = {...transactions[idx], value: Number(((transactions[idx].value||0) + diff).toFixed(2))};
   }
 
   // ===== SEED =====
@@ -476,32 +497,59 @@
   function openSheet(id){ document.getElementById(id).classList.add('open'); }
   function closeSheet(id){ document.getElementById(id).classList.remove('open'); }
 
+  // ===== PARCELAMENTO (UI) =====
+  function toggleInstallmentFields(){
+    const mode = document.getElementById('tx-installment-mode')?.value || 'none';
+    const block = document.getElementById('installment-fields');
+    if (block) block.style.display = (mode==='fixed') ? 'grid' : 'none';
+
+    // compra parcelada só faz sentido para despesa
+    if (mode==='fixed' && currentType !== 'expense'){
+      showToast('ℹ️ Parcelamento disponível para DESPESA. Alterei para despesa.', 'var(--yellow)');
+      setType('expense');
+    }
+  }
+
   // ===== TX =====
   function setType(t){
     currentType = t;
     document.getElementById('btn-inc').className = 'type-btn'+(t==='income'?' active-inc':'');
     document.getElementById('btn-exp').className = 'type-btn'+(t==='expense'?' active-exp':'');
+    toggleInstallmentFields();
   }
+
   function populateAccountSelect(){
     const sel = document.getElementById('tx-account');
     const opts = getAllAccounts();
     sel.innerHTML = opts.map(a=>`<option>${escapeHtml(a)}</option>`).join('');
   }
+
   function openTxSheet(type){
     setType(type);
     document.getElementById('tx-sheet-title').textContent='Nova Transação';
     document.getElementById('tx-id').value='';
     document.getElementById('tx-desc').value='';
     document.getElementById('tx-value').value='';
-    document.getElementById('tx-date').value = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('tx-date').value = today;
+
     populateAccountSelect();
     document.getElementById('tx-account').value='Carteira';
+
+    // parcelamento default
+    document.getElementById('tx-installment-mode').value = 'none';
+    document.getElementById('tx-installments').value = 2;
+    document.getElementById('tx-first-date').value = today;
+    toggleInstallmentFields();
+
     document.getElementById('tx-delete-btn').style.display='none';
     openSheet('tx-sheet');
   }
+
   function openEditTx(id){
     const t = transactions.find(x=>x.id===id);
     if (!t) return;
+
     document.getElementById('tx-sheet-title').textContent='Editar Transação';
     document.getElementById('tx-id').value=String(t.id);
     document.getElementById('tx-desc').value=t.desc||'';
@@ -510,9 +558,15 @@
     populateAccountSelect();
     document.getElementById('tx-account').value=t.account||'Carteira';
     setType(t.type||'expense');
+
+    // ao editar: não mexe em parcelamento (evita mexer na série toda)
+    document.getElementById('tx-installment-mode').value = 'none';
+    toggleInstallmentFields();
+
     document.getElementById('tx-delete-btn').style.display='block';
     openSheet('tx-sheet');
   }
+
   function deleteEditingTransaction(){
     const id = parseInt(document.getElementById('tx-id').value||'0',10);
     if (!id) return;
@@ -524,30 +578,82 @@
     renderMonthPage();
     showToast('🗑️ Excluída');
   }
+
   function saveTransaction(){
     const idStr = document.getElementById('tx-id').value.trim();
     const editingId = idStr ? parseInt(idStr,10) : null;
 
-    const value = parseFloat(document.getElementById('tx-value').value);
+    const totalValue = parseFloat(document.getElementById('tx-value').value);
     const desc = (document.getElementById('tx-desc').value||'').trim();
-    const date = document.getElementById('tx-date').value;
+    const purchaseDate = document.getElementById('tx-date').value;
     const account = document.getElementById('tx-account').value;
 
-    if (!value || value<=0 || !desc || !date){ showToast('⚠️ Preencha os campos','var(--red)'); return; }
+    if (!totalValue || totalValue<=0 || !desc || !purchaseDate){ showToast('⚠️ Preencha os campos','var(--red)'); return; }
 
     const cat = '📦 Outros';
+
     if (editingId){
       const idx = transactions.findIndex(t=>t.id===editingId);
       if (idx<0) return;
-      transactions[idx] = {...transactions[idx], type: currentType, value, desc, date, cat, account};
-    } else {
-      transactions.unshift({id: nextId(transactions), type: currentType, value, desc, date, cat, account});
+      transactions[idx] = {...transactions[idx], type: currentType, value: totalValue, desc, date: purchaseDate, cat, account};
+      saveAll();
+      closeSheet('tx-sheet');
+      renderAll();
+      renderMonthPage();
+      showToast('✅ Atualizado');
+      return;
     }
-    saveAll();
-    closeSheet('tx-sheet');
-    renderAll();
-    renderMonthPage();
-    showToast('✅ Salvo');
+
+    const mode = document.getElementById('tx-installment-mode').value || 'none';
+
+    // À vista
+    if (mode === 'none'){
+      transactions.unshift({id: nextId(transactions), type: currentType, value: totalValue, desc, date: purchaseDate, cat, account});
+      saveAll();
+      closeSheet('tx-sheet');
+      renderAll();
+      renderMonthPage();
+      showToast('✅ Salvo');
+      return;
+    }
+
+    // Parcelado (N)
+    if (mode === 'fixed'){
+      if (currentType !== 'expense'){
+        showToast('⚠️ Parcelamento apenas para despesa', 'var(--red)');
+        return;
+      }
+      const n = Math.max(2, Math.min(48, parseInt(document.getElementById('tx-installments').value||'2',10)));
+      const firstDate = document.getElementById('tx-first-date').value || purchaseDate;
+
+      const per = Number((totalValue / n).toFixed(2));
+      const seriesId = 'SER' + Date.now();
+      const createdIds = [];
+
+      for (let i=0;i<n;i++){
+        const d = addMonthsISO(firstDate, i);
+        const id = nextId(transactions);
+        createdIds.push(id);
+        transactions.unshift({
+          id,
+          type:'expense',
+          value: per,
+          desc: `${desc} (${i+1}/${n})`,
+          date: d,
+          cat,
+          account,
+          meta:{installment:{seriesId, idx:i+1, total:n}}
+        });
+      }
+      adjustLastInstallment(createdIds, totalValue);
+
+      saveAll();
+      closeSheet('tx-sheet');
+      renderAll();
+      renderMonthPage();
+      showToast(`✅ Compra parcelada: ${n} lançamentos criados!`);
+      return;
+    }
   }
 
   // ===== Month page =====
@@ -566,7 +672,6 @@
       sel.value = monthAccount;
     }
 
-    // popular conta da consulta (inclui Carteira)
     const qSel = document.getElementById('q-account');
     if (qSel){
       const opts = ['ALL', ...getAllAccounts()];
@@ -575,7 +680,6 @@
     }
 
     renderMonthPage();
-    // não roda automaticamente; usuário clica Enter
     clearQuery(true);
   }
 
@@ -617,6 +721,7 @@
     const el = document.getElementById('month-tx');
     const list = filtered.slice().sort((a,b)=> (a.date||'').localeCompare(b.date||'') || (a.id-b.id));
     let running = carry;
+
     el.innerHTML = list.length ? list.map(t => {
       const delta = txDeltaForRunningBalance(t);
       running = Number((running + delta).toFixed(2));
@@ -625,9 +730,9 @@
       const cls  = t.type === 'income' ? 'pos' : 'neg';
       const bg   = t.type === 'income' ? '#16a34a22' : '#dc262622';
       const icon = (t.cat || '📦').split(' ')[0];
-      const catName = (t.cat || '').split(' ').slice(1).join(' ') || t.cat || '';
       const dateLbl = t.date ? new Date(t.date + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : '';
       const accLbl = t.account ? `💼 ${t.account}` : '';
+      const inst = t.meta?.installment?.total ? ` • ${t.meta.installment.idx}/${t.meta.installment.total}` : '';
       const saldoLbl = isTransfer(t) ? 'Saldo: (sem efeito – transferência)' : `Saldo: ${fmt(running)}`;
 
       return `
@@ -638,8 +743,8 @@
           </div>
           <div class="tx-icon" style="background:${bg}">${escapeHtml(icon)}</div>
           <div class="tx-info">
-            <div class="tx-name">${escapeHtml(t.desc||'')}</div>
-            <div class="tx-cat">${escapeHtml(catName)}</div>
+            <div class="tx-name">${escapeHtml(t.desc||'')}${escapeHtml(inst)}</div>
+            <div class="tx-cat">${escapeHtml(t.cat||'')}</div>
             <div class="tx-sub">${escapeHtml(accLbl)} • ${escapeHtml(saldoLbl)}</div>
           </div>
           <div class="tx-right">
@@ -651,26 +756,19 @@
     }).join('') : `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Sem lançamentos no mês.</div>`;
   }
 
-  // ===== Consulta (Enter) =====
+  // ===== Consulta =====
   function onQueryKeyDown(ev){
-    if (ev.key === 'Enter') {
-      ev.preventDefault();
-      performSearch();
-    }
+    if (ev.key === 'Enter') { ev.preventDefault(); performSearch(); }
   }
-  function performSearch(){
-    renderQueryResults();
-  }
+  function performSearch(){ renderQueryResults(); }
   function clearQuery(soft){
     const t = document.getElementById('q-text');
     if (t) t.value = '';
     const meta = document.getElementById('q-meta');
     const results = document.getElementById('q-results');
     if (meta) meta.style.display = 'none';
-    if (results && !soft) results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo e clique ⏎.</div>`;
-    if (results && soft) results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">Digite algo e clique ⏎ (Enter) para pesquisar.</div>`;
+    if (results) results.innerHTML = `<div style="color:var(--muted);text-align:center;padding:18px;font-size:.84rem">${soft?'Digite algo e clique ⏎ (Enter) para pesquisar.':'Digite algo e clique ⏎.'}</div>`;
   }
-
   function renderQueryResults(){
     const txtEl = document.getElementById('q-text');
     const q = (txtEl?.value || '').trim().toLowerCase();
@@ -683,11 +781,8 @@
     if (qAccount !== 'ALL') list = list.filter(t => (t.account||'') === qAccount);
     if (type !== 'all') list = list.filter(t => t.type === type);
 
-    if (q) {
-      list = list.filter(t => (`${t.desc||''} ${t.cat||''} ${t.account||''} ${t.date||''}`).toLowerCase().includes(q));
-    } else {
-      list = [];
-    }
+    if (q) list = list.filter(t => (`${t.desc||''} ${t.cat||''} ${t.account||''} ${t.date||''}`).toLowerCase().includes(q));
+    else list = [];
 
     const meta = document.getElementById('q-meta');
     const results = document.getElementById('q-results');
@@ -712,8 +807,8 @@
     const cls  = t.type === 'income' ? 'pos' : 'neg';
     const bg   = t.type === 'income' ? '#16a34a22' : '#dc262622';
     const icon = (t.cat || '📦').split(' ')[0];
-    const catName = (t.cat || '').split(' ').slice(1).join(' ') || t.cat || '';
     const dateLbl = t.date ? new Date(t.date + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'short'}) : '';
+    const inst = t.meta?.installment?.total ? ` • ${t.meta.installment.idx}/${t.meta.installment.total}` : '';
     return `
       <div class="tx-item">
         <div class="mini-actions">
@@ -722,8 +817,8 @@
         </div>
         <div class="tx-icon" style="background:${bg}">${escapeHtml(icon)}</div>
         <div class="tx-info">
-          <div class="tx-name">${escapeHtml(t.desc||'')}</div>
-          <div class="tx-cat">${escapeHtml(catName)}</div>
+          <div class="tx-name">${escapeHtml(t.desc||'')}${escapeHtml(inst)}</div>
+          <div class="tx-cat">${escapeHtml(t.cat||'')}</div>
           <div class="tx-sub">💼 ${escapeHtml(t.account||'')}</div>
         </div>
         <div class="tx-right">
