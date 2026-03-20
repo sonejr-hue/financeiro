@@ -116,7 +116,7 @@
 
     /* TRANSACTIONS */
     .tx-list{display:flex;flex-direction:column;gap:8px;}
-    .tx-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:14px;cursor:pointer;transition:all .15s;}
+    .tx-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:14px;cursor:pointer;transition:all .15s;position:relative;}
     .tx-item:active{transform:scale(.97);}
     .tx-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
     .tx-info{flex:1;min-width:0;}
@@ -170,14 +170,25 @@
     .cc-val{font-size:.75rem;font-weight:700;color:#fff;}
     .cc-bar-bg{background:rgba(255,255,255,.2);border-radius:3px;height:4px;margin-top:5px;overflow:hidden;}
     .cc-bar-fill{height:100%;border-radius:3px;background:rgba(255,255,255,.75);}
-    .credit-detail-item{background:var(--card2);border-radius:14px;padding:14px;margin:0 16px 10px;border:1px solid rgba(255,255,255,.03);}
-    .cdi-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-    .cdi-name{font-size:.86rem;font-weight:700;}
-    .cdi-due{font-size:.7rem;color:var(--yellow);}
-    .cdi-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);}
-    .cdi-row:last-child{border-bottom:none;}
-    .cdi-lbl{font-size:.72rem;color:var(--muted);}
-    .cdi-val{font-size:.76rem;font-weight:700;}
+
+    /* DELETE BUTTONS */
+    .del-mini{
+      position:absolute;top:10px;right:10px;
+      width:30px;height:30px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(15,23,42,.35);
+      color:#fff;cursor:pointer;font-size:.9rem;font-weight:800;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .del-mini:active{transform:scale(.93);}
+    .card-del{position:absolute;top:10px;right:10px;}
+    .danger-btn{
+      width:100%;padding:13px;border-radius:14px;border:1px solid rgba(239,68,68,.35);
+      background:rgba(239,68,68,.12);color:#fecaca;font-weight:800;cursor:pointer;
+    }
+    .danger-btn:active{transform:scale(.99);opacity:.9;}
+    .danger-row{display:flex;gap:10px;}
+    .danger-row .danger-btn{flex:1;}
 
     /* REPORTS */
     .rep-stat{background:var(--card2);border-radius:14px;padding:13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
@@ -240,7 +251,6 @@
 </head>
 <body>
 <div class="phone-frame">
-  <!-- SPLASH -->
   <div class="splash" id="splash">
     <div class="splash-logo">💰</div>
     <div class="splash-name">FinanceFlow</div>
@@ -248,18 +258,14 @@
     <div class="splash-bar"><div class="splash-progress"></div></div>
   </div>
 
-  <!-- NOTCH -->
   <div class="notch"><div class="notch-cam"></div><div class="notch-speaker"></div></div>
 
-  <!-- STATUS BAR -->
   <div class="status-bar">
     <span class="status-time" id="status-time">9:41</span>
     <div class="status-icons"><span>▲▲▲</span><span>🔋</span></div>
   </div>
 
-  <!-- SCREEN -->
   <div class="screen" id="screen">
-
     <!-- HOME -->
     <div class="page active" id="page-home">
       <div class="app-header">
@@ -267,7 +273,10 @@
           <div class="greeting" id="greeting">Bom dia</div>
           <div class="name">FinanceFlow</div>
         </div>
-        <div class="icon-btn" onclick="showToast('🔔 Sem novas notificações')">🔔</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="icon-btn" onclick="switchPage('settings')" title="Configurações">⚙️</div>
+          <div class="icon-btn" onclick="showToast('🔔 Sem novas notificações')">🔔</div>
+        </div>
       </div>
 
       <div class="install-banner" id="install-banner" style="display:none">
@@ -340,7 +349,10 @@
     <div class="page" id="page-wallet">
       <div class="app-header">
         <div class="header-left"><div class="name">Minha Carteira</div></div>
-        <div class="icon-btn" onclick="openSheet('wallet-type-sheet')">＋</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="icon-btn" onclick="openSheet('wallet-type-sheet')">＋</div>
+          <div class="icon-btn" onclick="switchPage('settings')" title="Configurações">⚙️</div>
+        </div>
       </div>
 
       <div class="wallet-summary" id="wallet-summary"></div>
@@ -352,7 +364,14 @@
           <div class="wallet-cash-val" id="cash-display">R$ 0,00</div>
           <div class="wallet-cash-sub">Toque para editar</div>
         </div>
-        <button class="wallet-edit-btn">✏️ Editar</button>
+        <button class="wallet-edit-btn" onclick="event.stopPropagation();openCashSheet()">✏️ Editar</button>
+      </div>
+
+      <div class="section">
+        <div class="danger-row">
+          <button class="danger-btn" onclick="confirmClearCash()">Zerar carteira</button>
+          <button class="danger-btn" onclick="confirmClearBanks()">Excluir bancos</button>
+        </div>
       </div>
 
       <div class="section">
@@ -364,22 +383,29 @@
       </div>
 
       <div class="section">
+        <div class="danger-row">
+          <button class="danger-btn" onclick="confirmClearCredits()">Excluir cartões</button>
+          <button class="danger-btn" onclick="confirmClearTx()">Excluir transações</button>
+        </div>
+      </div>
+
+      <div class="section">
         <div class="section-header">
           <span class="section-title">💳 Cartões de Crédito</span>
           <span class="section-link" onclick="openSheet('credit-sheet')">+ Adicionar</span>
         </div>
         <div class="wallet-scroll" id="credit-cards"></div>
       </div>
-
-      <div class="section-header" style="padding:0 16px"><span class="section-title">📋 Resumo dos Cartões</span></div>
-      <div id="credit-detail-list"></div>
     </div>
 
     <!-- TRANSACTIONS -->
     <div class="page" id="page-transactions">
       <div class="app-header">
         <div class="header-left"><div class="name">Transações</div></div>
-        <div class="icon-btn" onclick="openTxSheet('expense')">＋</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="icon-btn" onclick="confirmClearTx()" title="Excluir todas">🗑️</div>
+          <div class="icon-btn" onclick="openTxSheet('expense')">＋</div>
+        </div>
       </div>
       <div class="section">
         <div class="chart-tabs" style="margin-bottom:14px">
@@ -404,6 +430,32 @@
     <div class="page" id="page-reports">
       <div class="app-header"><div class="header-left"><div class="name">Relatórios</div></div></div>
       <div class="section"><div id="rep-content"></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="app-header">
+        <div class="header-left"><div class="name">Configurações</div></div>
+        <div class="icon-btn" onclick="switchPage('home')">✕</div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><span class="section-title">🧹 Limpeza de dados</span></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px">
+          <div style="color:var(--muted);font-size:.78rem;line-height:1.4;margin-bottom:12px">
+            Use os botões abaixo para excluir informações do app. Esta ação não tem “desfazer”.
+          </div>
+          <div class="danger-row" style="margin-bottom:10px">
+            <button class="danger-btn" onclick="confirmClearTx()">Excluir transações</button>
+            <button class="danger-btn" onclick="confirmClearBanks()">Excluir bancos</button>
+          </div>
+          <div class="danger-row" style="margin-bottom:10px">
+            <button class="danger-btn" onclick="confirmClearCredits()">Excluir cartões</button>
+            <button class="danger-btn" onclick="confirmClearCash()">Zerar carteira</button>
+          </div>
+          <button class="danger-btn" onclick="confirmResetAll()">Zerar TUDO (reset geral)</button>
+        </div>
+      </div>
     </div>
 
   </div><!-- /screen -->
@@ -556,10 +608,10 @@
   </div>
 
   <div class="toast" id="toast"></div>
-</div><!-- /phone-frame -->
+</div>
 
 <script>
-  // =============== PWA INSTALL + SW (inline) ===============
+  // ===== PWA INSTALL + SW (inline) =====
   let deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
@@ -579,7 +631,7 @@
   }
   if ('serviceWorker' in navigator) {
     const swCode = `
-      const CACHE = 'financeflow-v2';
+      const CACHE = 'financeflow-v3';
       self.addEventListener('install', (e) => {
         e.waitUntil((async () => {
           const cache = await caches.open(CACHE);
@@ -614,7 +666,7 @@
     navigator.serviceWorker.register(url).catch(() => {});
   }
 
-  // =============== STATE ===============
+  // ===== STATE =====
   let transactions = JSON.parse(localStorage.getItem('ff_tx') || '[]');
   let goals        = JSON.parse(localStorage.getItem('ff_goals') || '[]');
   let banks        = JSON.parse(localStorage.getItem('ff_banks') || '[]');
@@ -624,7 +676,7 @@
   let chartMonths  = 6;
   let txFilter     = 'all';
 
-  // =============== SEED ===============
+  // ===== SEED =====
   (function seedData(){
     if (!transactions.length) {
       const now = new Date(), m = now.getMonth(), y = now.getFullYear();
@@ -635,11 +687,6 @@
         {id:3,type:'expense',value:1800, desc:'Aluguel',        cat:'🏠 Moradia',     date:d(m,1),  account:'Nubank'},
         {id:4,type:'expense',value:650,  desc:'Supermercado',   cat:'🍔 Alimentação', date:d(m,8),  account:'Nubank Gold'},
         {id:5,type:'expense',value:320,  desc:'Combustível',    cat:'🚗 Transporte',  date:d(m,12), account:'Nubank Gold'},
-        {id:6,type:'expense',value:280,  desc:'Plano de Saúde', cat:'💊 Saúde',       date:d(m,3),  account:'Nubank'},
-        {id:7,type:'expense',value:150,  desc:'Streaming',      cat:'🎮 Lazer',       date:d(m,7),  account:'Inter Black'},
-        {id:8,type:'income', value:500,  desc:'Rendimento',     cat:'📦 Outros',      date:d(m,15), account:'Itaú'},
-        {id:9,type:'expense',value:420,  desc:'Restaurante',    cat:'🍔 Alimentação', date:d(m,18), account:'Inter Black'},
-        {id:10,type:'expense',value:200, desc:'Energia/Água',   cat:'💡 Contas',      date:d(m,20), account:'Nubank'},
       ];
       localStorage.setItem('ff_tx', JSON.stringify(transactions));
     }
@@ -647,28 +694,26 @@
       goals = [
         {id:1,name:'Reserva de Emergência',target:30000,current:12000,color:'#22c55e'},
         {id:2,name:'Viagem Internacional',  target:15000,current:4500, color:'#6366f1'},
-        {id:3,name:'Novo Notebook',         target:5000, current:3200, color:'#f59e0b'},
       ];
       localStorage.setItem('ff_goals', JSON.stringify(goals));
     }
     if (!banks.length) {
       banks = [
-        {id:1,name:'Nubank',type:'Conta Digital',  balance:4250.80,digits:'1234',color:'linear-gradient(135deg,#7c3aed,#4f46e5)'},
-        {id:2,name:'Itaú',  type:'Conta Corrente', balance:8900.00,digits:'5678',color:'linear-gradient(135deg,#b45309,#d97706)'},
+        {id:1,name:'Nubank',type:'Conta Digital',balance:4250.80,digits:'1234',color:'linear-gradient(135deg,#7c3aed,#4f46e5)'},
+        {id:2,name:'Itaú',  type:'Conta Corrente',balance:8900.00,digits:'5678',color:'linear-gradient(135deg,#b45309,#d97706)'},
       ];
       localStorage.setItem('ff_banks', JSON.stringify(banks));
     }
     if (!credits.length) {
       credits = [
-        {id:1,name:'Nubank Gold', flag:'Mastercard',limit:12000,used:3450,due:10,digits:'9012',color:'linear-gradient(135deg,#7c3aed,#6d28d9)'},
-        {id:2,name:'Inter Black', flag:'Mastercard',limit:8000, used:1200,due:15,digits:'3456',color:'linear-gradient(135deg,#0f172a,#1e293b)'},
+        {id:1,name:'Nubank Gold',flag:'Mastercard',limit:12000,used:3450,due:10,digits:'9012',color:'linear-gradient(135deg,#7c3aed,#6d28d9)'},
       ];
       localStorage.setItem('ff_credits', JSON.stringify(credits));
     }
     if (!cashAmount) { cashAmount = 350; localStorage.setItem('ff_cash', String(cashAmount)); }
   })();
 
-  // =============== UTILS ===============
+  // ===== UTILS =====
   const fmt  = v => 'R$ ' + (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
   const fmtS = v => 'R$ ' + (Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:0, maximumFractionDigits:0});
   const nextId = arr => arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1;
@@ -686,14 +731,7 @@
     return transactions.filter(t => (t.date||'').startsWith(`${y}-${m}`));
   }
 
-  function isCreditAccount(name) {
-    return credits.some(c => c.name === name);
-  }
-  function isBankAccount(name) {
-    return banks.some(b => b.name === name);
-  }
-
-  // =============== CLOCK / SPLASH ===============
+  // ===== CLOCK / SPLASH =====
   function updateClock() {
     const n = new Date();
     document.getElementById('status-time').textContent = n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');
@@ -703,7 +741,7 @@
   updateClock(); setInterval(updateClock, 1000);
   setTimeout(() => document.getElementById('splash').classList.add('hide'), 1800);
 
-  // =============== NAV / PAGES ===============
+  // ===== NAV / PAGES =====
   function switchPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
@@ -714,7 +752,7 @@
     renderAll();
   }
 
-  // =============== SHEETS ===============
+  // ===== SHEETS =====
   const sheetIds = ['tx-sheet','goal-sheet','cash-sheet','bank-sheet','credit-sheet','wallet-type-sheet'];
   sheetIds.forEach(id => {
     document.getElementById(id).addEventListener('click', e => {
@@ -748,7 +786,7 @@
     sel.innerHTML = opts.map(o => `<option>${o}</option>`).join('');
   }
 
-  // =============== CRUD ===============
+  // ===== CRUD =====
   function addTransaction() {
     const value   = parseFloat(document.getElementById('tx-value').value);
     const desc    = document.getElementById('tx-desc').value.trim();
@@ -767,6 +805,13 @@
     document.getElementById('tx-desc').value = '';
     renderAll();
     showToast('✅ Transação salva!');
+  }
+
+  function deleteTransaction(id) {
+    transactions = transactions.filter(t => t.id !== id);
+    localStorage.setItem('ff_tx', JSON.stringify(transactions));
+    renderAll();
+    showToast('🗑️ Transação excluída');
   }
 
   function addGoal() {
@@ -814,6 +859,15 @@
     showToast('🏦 Conta adicionada!');
   }
 
+  function deleteBank(id) {
+    const b = banks.find(x => x.id === id);
+    banks = banks.filter(x => x.id !== id);
+    localStorage.setItem('ff_banks', JSON.stringify(banks));
+    // mantém transações, mas se o usuário quiser limpar referência, ele pode usar o reset geral
+    renderAll();
+    showToast(`🗑️ Banco excluído${b?.name ? ': '+b.name : ''}`);
+  }
+
   function addCredit() {
     const name   = document.getElementById('cc-name').value.trim();
     const flag   = document.getElementById('cc-flag').value;
@@ -836,14 +890,70 @@
     showToast('💳 Cartão adicionado!');
   }
 
-  // =============== FILTERS / TABS ===============
+  function deleteCredit(id) {
+    const c = credits.find(x => x.id === id);
+    credits = credits.filter(x => x.id !== id);
+    localStorage.setItem('ff_credits', JSON.stringify(credits));
+    renderAll();
+    showToast(`🗑️ Cartão excluído${c?.name ? ': '+c.name : ''}`);
+  }
+
+  // ===== BULK DELETE / RESET =====
+  function confirmClearTx(){ if (confirm('Excluir TODAS as transações?')) clearTransactions(); }
+  function confirmClearBanks(){ if (confirm('Excluir TODOS os bancos?')) clearBanks(); }
+  function confirmClearCredits(){ if (confirm('Excluir TODOS os cartões de crédito?')) clearCredits(); }
+  function confirmClearCash(){ if (confirm('Zerar o valor da carteira (dinheiro)?')) clearCash(); }
+  function confirmResetAll(){
+    if (confirm('ATENÇÃO: isto vai zerar/excluir TUDO (transações, bancos, cartões, metas e carteira). Confirmar?')) resetAll();
+  }
+
+  function clearTransactions(){
+    transactions = [];
+    localStorage.setItem('ff_tx', JSON.stringify(transactions));
+    renderAll();
+    showToast('🗑️ Transações excluídas');
+  }
+  function clearBanks(){
+    banks = [];
+    localStorage.setItem('ff_banks', JSON.stringify(banks));
+    renderAll();
+    showToast('🗑️ Bancos excluídos');
+  }
+  function clearCredits(){
+    credits = [];
+    localStorage.setItem('ff_credits', JSON.stringify(credits));
+    renderAll();
+    showToast('🗑️ Cartões excluídos');
+  }
+  function clearCash(){
+    cashAmount = 0;
+    localStorage.setItem('ff_cash', '0');
+    renderAll();
+    showToast('👛 Carteira zerada');
+  }
+  function resetAll(){
+    transactions = [];
+    banks = [];
+    credits = [];
+    goals = [];
+    cashAmount = 0;
+    localStorage.setItem('ff_tx', JSON.stringify(transactions));
+    localStorage.setItem('ff_banks', JSON.stringify(banks));
+    localStorage.setItem('ff_credits', JSON.stringify(credits));
+    localStorage.setItem('ff_goals', JSON.stringify(goals));
+    localStorage.setItem('ff_cash', '0');
+    renderAll();
+    switchPage('home');
+    showToast('🧹 Reset geral concluído');
+  }
+
+  // ===== FILTERS / TABS =====
   function filterTx(f, el) {
     txFilter = f;
     document.querySelectorAll('#page-transactions .chart-tab').forEach(t => t.classList.remove('active'));
     if (el) el.classList.add('active');
     renderAllTx();
   }
-
   function setChartTab(el, n) {
     chartMonths = n;
     document.querySelectorAll('#page-home .chart-tab').forEach(t => t.classList.remove('active'));
@@ -851,7 +961,7 @@
     renderMiniChart();
   }
 
-  // =============== RENDER HELPERS ===============
+  // ===== RENDER HELPERS =====
   function txHTML(t) {
     const sign = t.type === 'income' ? '+' : '-';
     const cls  = t.type === 'income' ? 'pos' : 'neg';
@@ -862,6 +972,7 @@
     const accLbl = t.account ? `💼 ${t.account}` : '';
     return `
       <div class="tx-item">
+        <button class="del-mini" title="Excluir" onclick="deleteTransaction(${t.id});event.stopPropagation()">🗑️</button>
         <div class="tx-icon" style="background:${bg}">${icon}</div>
         <div class="tx-info">
           <div class="tx-name">${t.desc || ''}</div>
@@ -876,13 +987,11 @@
     `;
   }
 
-  // =============== RENDERS ===============
+  // ===== RENDERS =====
   function renderBalance() {
     const cur = getMonthTx(0);
     const inc = cur.filter(t => t.type === 'income').reduce((a,t)=>a + (t.value||0), 0);
     const exp = cur.filter(t => t.type === 'expense').reduce((a,t)=>a + (t.value||0), 0);
-
-    // Patrimônio = (saldos bancos) + (dinheiro) - (faturas em aberto) [aproximação simples]
     const banksTotal = banks.reduce((a,b)=>a + (b.balance||0), 0);
     const cashTotal  = cashAmount || 0;
     const cardsDebt  = credits.reduce((a,c)=>a + (c.used||0), 0);
@@ -994,24 +1103,21 @@
   }
 
   function renderWallet() {
-    // Summary
     const banksTotal = banks.reduce((a,b)=>a+(b.balance||0),0);
     const cashTotal  = cashAmount || 0;
     const cardsUsed  = credits.reduce((a,c)=>a+(c.used||0),0);
-    const cardsLimit = credits.reduce((a,c)=>a+(c.limit||0),0);
 
     document.getElementById('wallet-summary').innerHTML = `
       <div class="ws-card"><div class="ws-icon">🏦</div><div class="ws-lbl">Bancos</div><div class="ws-val">${fmtS(banksTotal)}</div></div>
       <div class="ws-card"><div class="ws-icon">👛</div><div class="ws-lbl">Carteira</div><div class="ws-val">${fmtS(cashTotal)}</div></div>
       <div class="ws-card"><div class="ws-icon">💳</div><div class="ws-lbl">Faturas</div><div class="ws-val" style="color:var(--red)">${fmtS(cardsUsed)}</div></div>
     `;
-
     document.getElementById('cash-display').textContent = fmt(cashTotal);
 
-    // Banks
     const banksEl = document.getElementById('bank-cards');
     banksEl.innerHTML = banks.length ? banks.map(b => `
       <div class="bank-card" style="background:${b.color}">
+        <button class="del-mini card-del" title="Excluir banco" onclick="deleteBank(${b.id});event.stopPropagation()">🗑️</button>
         <div class="bc-bank">${b.name}</div>
         <div class="bc-type">${b.type}</div>
         <div class="bc-balance">${fmt(b.balance||0)}</div>
@@ -1022,12 +1128,12 @@
       </div>
     `).join('') : `<div style="color:var(--muted);padding:0 16px">Nenhuma conta cadastrada.</div>`;
 
-    // Credits
     const creditsEl = document.getElementById('credit-cards');
     creditsEl.innerHTML = credits.length ? credits.map(c => {
       const pct = (c.limit||0) > 0 ? Math.min(100, Math.round(((c.used||0)/(c.limit||1))*100)) : 0;
       return `
         <div class="credit-card" style="background:${c.color}">
+          <button class="del-mini card-del" title="Excluir cartão" onclick="deleteCredit(${c.id});event.stopPropagation()">🗑️</button>
           <div class="cc-flag">${c.flag}</div>
           <div class="cc-name">${c.name}</div>
           <div class="cc-limit-row">
@@ -1042,24 +1148,6 @@
         </div>
       `;
     }).join('') : `<div style="color:var(--muted);padding:0 16px">Nenhum cartão cadastrado.</div>`;
-
-    // Credit detail list
-    const cd = document.getElementById('credit-detail-list');
-    cd.innerHTML = credits.length ? credits.map(c=>{
-      const available = (c.limit||0) - (c.used||0);
-      return `
-        <div class="credit-detail-item">
-          <div class="cdi-header">
-            <div class="cdi-name">💳 ${c.name}</div>
-            <div class="cdi-due">Venc.: dia ${c.due || 10}</div>
-          </div>
-          <div class="cdi-row"><span class="cdi-lbl">Bandeira</span><span class="cdi-val">${c.flag}</span></div>
-          <div class="cdi-row"><span class="cdi-lbl">Limite</span><span class="cdi-val">${fmt(c.limit||0)}</span></div>
-          <div class="cdi-row"><span class="cdi-lbl">Fatura</span><span class="cdi-val" style="color:var(--red)">${fmt(c.used||0)}</span></div>
-          <div class="cdi-row"><span class="cdi-lbl">Disponível</span><span class="cdi-val" style="color:var(--green)">${fmt(available)}</span></div>
-        </div>
-      `;
-    }).join('') : '';
   }
 
   function renderReports() {
@@ -1098,7 +1186,7 @@
     `;
   }
 
-  // =============== RENDER ALL ===============
+  // ===== RENDER ALL =====
   function renderAll() {
     renderBalance();
     renderMiniChart();
@@ -1111,9 +1199,16 @@
     populateAccountSelect();
   }
 
-  // First render
-  renderAll();
+  // ===== TABS / FILTERS =====
+  function setChartTab(el, n) {
+    chartMonths = n;
+    document.querySelectorAll('#page-home .chart-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderMiniChart();
+  }
 
+  // ===== INIT =====
+  renderAll();
 </script>
 </body>
 </html>
